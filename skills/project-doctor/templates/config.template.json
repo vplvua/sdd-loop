@@ -1,0 +1,16 @@
+{
+  "language": "{{DOCS_LANGUAGE}}",
+  "docsDir": "docs",
+  "paths": {
+    "prd": "docs/PRD.md",
+    "plan": "docs/capability-plan.md",
+    "currentState": "docs/current-state.md",
+    "traceability": "docs/traceability-matrix.md",
+    "journal": "docs/assumptions-open-questions.md",
+    "glossary": "docs/glossary.md",
+    "adrDir": "docs/adr",
+    "cyclesDir": "docs/cycles"
+  },
+  "verifyCommand": "npm run verify",
+  "openspec": true
+}
