@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-edit-format.sh",
+            "timeout": 120,
+            "statusMessage": "sdd-loop: prettier + eslint on edited file"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-commit-verify.sh",
+            "timeout": 900,
+            "statusMessage": "sdd-loop: verify gate (runs on git commit)"
+          }
+        ]
+      }
+    ]
+  }
+}
