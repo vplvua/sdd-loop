@@ -1,0 +1,12 @@
+{
+  "name": "sdd-loop",
+  "owner": { "name": "Vasyl Pashko", "email": "vasyl.pashko@gmail.com" },
+  "description": "SDD Loop — spec-driven development workflow plugin for TypeScript projects.",
+  "plugins": [
+    {
+      "name": "sdd-loop",
+      "source": "./",
+      "description": "Spec-driven development workflow with a self-improvement loop."
+    }
+  ]
+}
