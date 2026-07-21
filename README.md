@@ -30,7 +30,7 @@ verify command) — written by the doctor's first-run interview.
 ## Install
 
 ```
-/plugin marketplace add <owner>/sdd-loop
+/plugin marketplace add vplvua/sdd-loop
 /plugin install sdd-loop@sdd-loop
 ```
 

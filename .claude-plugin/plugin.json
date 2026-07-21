@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "description": "Spec-driven development workflow with a self-improvement loop: project doctor, capability slicing, adversarial slice review, verify gates on commit, and post-slice retros that improve the process itself.",
   "author": { "name": "Vasyl Pashko", "email": "vasyl.pashko@gmail.com" },
+  "homepage": "https://github.com/vplvua/sdd-loop",
+  "repository": "https://github.com/vplvua/sdd-loop",
   "license": "MIT",
   "keywords": ["sdd", "spec-driven", "workflow", "typescript", "process"]
 }
