@@ -104,7 +104,11 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 - Hooks: this plugin ships format-on-edit and verify-on-commit hooks —
   active automatically wherever the plugin is enabled. Check only that
   the project does not have conflicting duplicate hooks in
-  `.claude/settings.json`.
+  `.claude/settings.json`. Resolution guidance: while the plugin is
+  dev-loaded (`--plugin-dir`), keep the project-local hooks (the repo
+  stays self-sufficient) and accept the duplicate firing in plugin-dev
+  sessions; once the plugin is permanently enabled at project scope,
+  remove the project duplicates so verify does not run twice per commit.
 
 ### 6. Maker ≠ checker
 
@@ -139,9 +143,12 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 
 Always end the audit with one table:
 
-| #   | Layer | Status | Gap | Offered fix |
-| --- | ----- | ------ | --- | ----------- |
+| #   | Layer | Status | Evidence | Gap → offered fix |
+| --- | ----- | ------ | -------- | ----------------- |
 
-then scaffold accepted fixes one layer at a time (suggest a
+For `OK` rows put the concrete proof in Evidence (what was checked and
+found) and leave the fix cell empty; only `GAP` rows carry a fix offer.
+
+Then scaffold accepted fixes one layer at a time (suggest a
 `chore(sdd): …` commit per layer). Re-run at the end of a full init to
 prove convergence: the matrix must be all green / N/A.
