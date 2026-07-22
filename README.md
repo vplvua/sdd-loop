@@ -36,6 +36,10 @@ verify command) — written by the doctor's first-run interview.
 
 Then in your project: `/sdd-loop:project-doctor`.
 
+Starting a brand-new project? Walk
+[docs/new-project-checklist.md](docs/new-project-checklist.md) first —
+what to think through and scaffold before the doctor takes over.
+
 ## Requirements
 
 - Node.js ≥ 20, `jq` (used by hooks)

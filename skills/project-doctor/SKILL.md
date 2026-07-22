@@ -13,6 +13,12 @@ this skill — they are structural skeletons in English; when scaffolding,
 translate headings and boilerplate into the project's documentation
 language from the config and fill placeholders from the interview.
 
+Prerequisites: the doctor audits and scaffolds the *process* layer, not
+the application. If the repo has no `package.json` / app scaffold, stop
+and tell the user to scaffold their stack first (their framework's CLI),
+pointing them to `docs/new-project-checklist.md` in the plugin repo —
+then re-run.
+
 Modes (auto-detected, or forced via argument):
 
 - **init** — no `.sdd/config.json` in the project: run the interview,
