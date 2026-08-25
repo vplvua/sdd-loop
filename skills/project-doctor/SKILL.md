@@ -65,10 +65,12 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 - PRD at `paths.prd` with **stable requirement codes** (FR-/NFR-/TC-/BC-
   or the project's equivalent), a changelog section, and NFR coverage
   (security, performance, observability at minimum).
-- This check is **agentic, not file-existence**: read the PRD and audit
-  that every requirement is testable (observable behavior, no vague
-  "should be fast"), codes are unique and referenced consistently.
-  Report per-requirement gaps.
+- This check is **agentic, not file-existence**: delegate the PRD part
+  to `/sdd-loop:prd` in audit mode (testability, code uniqueness, NFR
+  coverage, non-goals, changelog); its `READY` maps to OK, `NEEDS_WORK`
+  to GAP with the blocking items as the gap list. When scaffolding a
+  missing/skeletal PRD, offer `/sdd-loop:prd` interview mode instead of
+  filling the template inline.
 - Glossary at `paths.glossary` — terms used consistently in the PRD.
 - ADR dir at `paths.adrDir` with a README registry
   (`templates/adr-README.template.md`, MADR format per

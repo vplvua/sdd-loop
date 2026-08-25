@@ -19,6 +19,7 @@ PRD (coded requirements) → capability plan (vertical slices + DoD)
 | Component                       | What it does                                                                                                                                                      |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/sdd-loop:project-doctor`      | Audits/scaffolds the 7 SDD layers: spec, plan, memory, verification, maker≠checker, retro loop, tooling. Idempotent readiness matrix.                             |
+| `/sdd-loop:prd`                 | PRD interviewer & auditor: Socratic section-by-section elicitation (interview) and completeness/testability check (audit). Editor, not generator.                 |
 | `/sdd-loop:slice-plan`          | Slices the PRD into vertical capability slices; generates or audits the capability plan and the shared DoD.                                                       |
 | `/sdd-loop:slice-retro`         | Post-slice retrospective: metrics, friction from 4 signal sources, ≤3 small process fixes applied.                                                                |
 | `sdd-loop:slice-reviewer` agent | Adversarial review of a finished slice on a frozen SHA range, different model than the author session.                                                            |

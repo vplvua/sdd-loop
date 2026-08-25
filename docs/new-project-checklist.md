@@ -53,10 +53,11 @@ head produce a weak PRD. Write them down first:
 
 1. `/sdd-loop:project-doctor` — interview → `.sdd/config.json` →
    scaffold layer by layer, one commit per layer.
-2. **Review the PRD draft yourself.** The doctor generates a skeleton
-   with drafts from your one-paragraph idea; the PRD is normative — the
-   human owns its content. Fix requirement codes, limits, non-goals
-   before anything traces to them.
+2. `/sdd-loop:prd` (interview mode) — Socratic section-by-section
+   elicitation: the skill asks, you answer, it formalizes only what you
+   said; every draft needs your explicit confirmation. Then **read the
+   final document end-to-end yourself** — the PRD is normative and the
+   content is yours; everything downstream traces to its codes.
 3. `/sdd-loop:slice-plan` (generate mode) — vertical slices + shared
    DoD from the reviewed PRD.
 4. Re-run `/sdd-loop:project-doctor` — the readiness matrix must be all
