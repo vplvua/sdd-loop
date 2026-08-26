@@ -28,6 +28,26 @@ PRD (coded requirements) → capability plan (vertical slices + DoD)
 Project-side state lives in `.sdd/config.json` (docs language, paths,
 verify command) — written by the doctor's first-run interview.
 
+## Where do the components live?
+
+Nothing is copied into your project — unlike tools that vendor files
+into `.claude/`, a plugin serves its components from the plugin cache
+(`~/.claude/plugins/cache/`) for as long as it is enabled:
+
+- **Skills** appear as namespaced commands — type `/sdd-loop:` to see
+  all four in the autocomplete.
+- **Agent** — `sdd-loop:slice-reviewer` shows up in `/agents`; spawn it
+  by name. Subagents always start with a clean context, and its model
+  is pinned to `sonnet` in frontmatter, so maker ≠ checker holds on
+  both axes regardless of the author session's model.
+- **Hooks** are active automatically — inspect them via `/hooks`, not
+  `.claude/settings.json` (no entries there is normal).
+
+The only files ever written into your repo are the ones the doctor
+scaffolds (docs, configs, `.sdd/config.json`). This is deliberate:
+plugin updates propagate by version bump without touching your repo,
+and there is nothing to drift.
+
 ## Install
 
 ```
