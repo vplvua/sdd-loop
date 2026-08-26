@@ -12,10 +12,16 @@ set -u
 
 cmd=$(jq -r '.tool_input.command // empty' 2>/dev/null)
 
-case "$cmd" in
-  *"git commit"*) ;;
-  *) exit 0 ;;
-esac
+# Anchored match: fire only when `git commit` sits in command position
+# (line start or after ; & | (), allowing `git -C dir` / `git -c k=v`.
+# A heredoc or echo merely MENTIONING the phrase must not trigger the
+# gate (first-field-run lesson: it blocked an unrelated write). A line
+# inside a heredoc that literally starts with `git commit` still
+# matches — acceptable: the failure mode is a needless verify run.
+if ! printf '%s\n' "$cmd" |
+  grep -qE '(^|[;&|(])[[:space:]]*git[[:space:]]+(-[^[:space:]]+[[:space:]]+([^[:space:]]+[[:space:]]+)?)*commit([[:space:]]|$)'; then
+  exit 0
+fi
 
 proj="${CLAUDE_PROJECT_DIR:-$PWD}"
 

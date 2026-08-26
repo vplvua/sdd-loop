@@ -69,6 +69,31 @@ Finish: run audit mode on the result, then remind the user to read the
 whole document end-to-end once — final ownership of a normative doc is
 theirs — and hand off to `/sdd-loop:slice-plan`.
 
+## Consolidation & ratification (brownfield)
+
+When the PRD content comes from existing human-written docs (briefs,
+checklists, backend requirements) rather than the user's head, the
+interview is the wrong tool — consolidating in one batch (optionally a
+background agent) is fine. But a batch-consolidated PRD has no owner
+yet, so consolidation is not done until two extra steps run:
+
+1. **Decision log.** The consolidator MUST emit the list of everything
+   it decided rather than copied verbatim: conflicts between source
+   docs and which side won, numbers/limits it picked, product decisions
+   embedded in requirement wording, scope judgments (what it included
+   as MVP vs left out). No silent resolutions.
+2. **Ratification walk.** Present the decision log to the user in small
+   batches — each item gets an explicit confirm, an edit, or becomes a
+   journal open question. Also confirm the section inventory (areas,
+   NFR categories) and check total scope against the binding
+   constraints — a consolidator happily produces hundreds of coded
+   requirements; flag when the count obviously exceeds what the BC
+   budget can deliver and propose an MVP / post-MVP split.
+
+Then run audit mode and the same end-to-end read reminder as the
+interview finish. Guardrails still apply: unknowns → journal, drafted
+resolutions are `[DRAFT]` until ratified.
+
 ## Audit mode (existing PRD)
 
 Check and report per-requirement, not vaguely:

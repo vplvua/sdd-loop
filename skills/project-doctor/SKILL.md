@@ -70,7 +70,10 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   coverage, non-goals, changelog); its `READY` maps to OK, `NEEDS_WORK`
   to GAP with the blocking items as the gap list. When scaffolding a
   missing/skeletal PRD, offer `/sdd-loop:prd` interview mode instead of
-  filling the template inline.
+  filling the template inline; when consolidating from existing project
+  docs (brownfield), follow its consolidation flow — a decision log from
+  the consolidator plus a ratification walk with the user are mandatory
+  before the layer counts as OK.
 - Glossary at `paths.glossary` — terms used consistently in the PRD.
 - ADR dir at `paths.adrDir` with a README registry
   (`templates/adr-README.template.md`, MADR format per
