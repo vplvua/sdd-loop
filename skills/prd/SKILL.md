@@ -110,11 +110,16 @@ Check and report per-requirement, not vaguely:
   uniformly.
 - No decisions recorded elsewhere (journal, ADRs) that contradict the
   PRD text.
+- Provenance of numbers: spot-check numeric limits, timeouts, sizes and
+  counts against the source docs or journal — a number with no source
+  is a finding ("invented as agreed"), however plausible it looks.
+  Prioritize round numbers and tilde-prefixed values; a `~` in a
+  requirement is itself a testability finding.
 
 Output:
 
-| # | Section / code | Finding | Severity | Suggested fix |
-|---|----------------|---------|----------|---------------|
+| #   | Section / code | Finding | Severity | Suggested fix |
+| --- | -------------- | ------- | -------- | ------------- |
 
 then a verdict: `READY` or `NEEDS_WORK` with the blocking items listed.
 Apply fixes only when the user asks; content changes are always
