@@ -37,6 +37,14 @@ slices derived from the PRD. Paths and documentation language come from
 - Scope that does not fit a slice is cut, not stretched.
 - Every FR/NFR of the PRD must be covered by exactly one slice (traced
   in the traceability matrix); slices must not overlap on FR codes.
+  Two legal exceptions, both marked explicitly in the matrix:
+  plan-level constraints (cycle budgets and the like) trace to «plan»,
+  not a slice; **cross-cutting NFRs** (a11y, content tone, offline
+  states, compatibility) trace to the slice that proves them FIRST and
+  are re-verified by a named DoD check in every later slice that adds
+  surface they cover — one early slice cannot prove them for screens
+  that don't exist yet, and dumping them all on the foundation slice
+  both overloads it and falsifies the trace.
 
 ## Slice entry format
 
@@ -62,9 +70,11 @@ For each slice:
    acceptance scenarios.
 5. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
-   slice diff frozen at an explicit end SHA. `critical`/`high` findings
-   fixed (verify re-run); `medium`/`low` at the author's discretion,
-   dispositions logged in the retro.
+   slice diff frozen at an explicit end SHA. For slices spanning
+   multiple repositories, every involved repository's frozen range is
+   reviewed. `critical`/`high` findings fixed (verify re-run);
+   `medium`/`low` at the author's discretion, dispositions logged in
+   the retro.
 6. Launch-and-look check: run the app, walk the slice's happy path,
    confirm it works; note the check in the current-state doc.
 7. Spec change archived per the project's SDD tooling (e.g. OpenSpec:
