@@ -14,7 +14,11 @@ quality.
 
 Config: read `.sdd/config.json` (`paths.prd`, `paths.journal`,
 `paths.glossary`, `language`). If missing, run
-`/sdd-loop:project-doctor` first. The PRD is written in the configured
+`/sdd-loop:project-doctor` first. If the config declares
+`role: satellite`, doc paths cross into `primaryRoot` — when they are
+unreachable, ask the user to grant access (`--add-dir` or
+`permissions.additionalDirectories`) instead of proceeding with
+partial context. The PRD is written in the configured
 documentation language. The section skeleton ships with the doctor
 skill: `skills/project-doctor/templates/PRD.template.md` under the
 plugin root.

@@ -9,7 +9,11 @@ Analyze the just-finished slice session and turn friction into process
 improvements. Run at the END of the slice session, while the dialogue is
 still in context. The retro artifact is `<cyclesDir>/S-NN.md` (path,
 template pointer, and documentation language come from
-`.sdd/config.json`; default `docs/cycles/`).
+`.sdd/config.json`; default `docs/cycles/`). With `role: satellite` the
+cycles dir lives in the primary repo via `primaryRoot` — one retro per
+slice covers all involved repos; if the path is unreachable, ask the
+user to grant access (`--add-dir` or
+`permissions.additionalDirectories`) first.
 
 This step is what makes the process self-improving: fixes applied here
 land in CLAUDE.md, skills, and configs — the next slice starts cheaper.

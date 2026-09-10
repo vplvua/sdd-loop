@@ -13,7 +13,7 @@ this skill — they are structural skeletons in English; when scaffolding,
 translate headings and boilerplate into the project's documentation
 language from the config and fill placeholders from the interview.
 
-Prerequisites: the doctor audits and scaffolds the *process* layer, not
+Prerequisites: the doctor audits and scaffolds the _process_ layer, not
 the application. If the repo has no `package.json` / app scaffold, stop
 and tell the user to scaffold their stack first (their framework's CLI),
 pointing them to `docs/new-project-checklist.md` in the plugin repo —
@@ -49,7 +49,44 @@ Write the answers to `.sdd/config.json` from `templates/config.template.json`.
 All other sdd-loop skills and the `slice-reviewer` agent read this file.
 Fields: `language` (BCP-47 code for docs), `docsDir`, `paths` (prd,
 plan, currentState, traceability, journal, glossary, adrDir, cyclesDir),
-`verifyCommand`, `openspec` (bool). Keep paths project-relative.
+`verifyCommand`, `openspec` (bool), `role` (`primary` | `satellite`,
+default primary), `primaryRoot` (satellite only: relative path to the
+primary repo checkout). Keep paths project-relative.
+
+## Multi-repo projects (primary / satellite)
+
+One SDD documentation set can serve several repositories (e.g. mobile
+app + backend platform). Exactly one repo is the **primary** — it owns
+the shared docs: PRD, capability plan, journal, glossary, ADRs,
+current-state, cycles. Every other repo is a **satellite**; its config
+declares `"role": "satellite"`, `"primaryRoot": "../<primary-repo>"`,
+and its `paths.*` are written THROUGH primaryRoot (e.g.
+`../app/docs/PRD.md`) — so every other sdd-loop skill keeps working
+with no special logic.
+
+Interview: before asking anything, look for sibling directories whose
+`.sdd/config.json` has `role: primary` (or ask "is this repo part of an
+existing sdd-loop project?"). If yes → satellite init.
+
+Satellite deltas to the checklist:
+
+- **Reachability first.** Try reading `<primaryRoot>/.sdd/config.json`.
+  If the directory is not accessible, STOP and offer the durable fix:
+  add the primary to `permissions.additionalDirectories` in this repo's
+  `.claude/settings.json` (one-session alternative:
+  `claude --add-dir <primaryRoot>`). Without access every cross-repo
+  path silently breaks all sdd-loop skills — do not scaffold around it.
+- Shared layers — Spec (2), Plan (3), current-state and cycles parts of
+  Memory (4) / Improvement loop (7): owned by the primary. Verify they
+  are reachable and report `N/A (primary: <path>)`; never scaffold or
+  audit them from a satellite — run the full audit in the primary repo.
+- Local layers — scaffold as usual for THIS repo's stack: verify chain
+  (5), hooks conflict check, OpenSpec working layer (8, per-repo
+  specs), maker ≠ checker (6, plugin enabled at project scope here
+  too), tooling (9), and the CLAUDE.md merge (4) — with cross-repo
+  pointers: the handoff read order starts at the PRIMARY's
+  current-state and plan, then this repo's specs and the primary's
+  ADRs.
 
 ## Readiness checklist
 

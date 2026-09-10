@@ -2,7 +2,7 @@
 
 What to prepare BEFORE running `/sdd-loop:project-doctor` on a fresh
 project, and what the launch sequence looks like. The doctor audits and
-scaffolds the *process* layer — it does not invent your product or
+scaffolds the _process_ layer — it does not invent your product or
 scaffold your application.
 
 ## A. Thinking homework (before opening a terminal)
@@ -30,6 +30,11 @@ head produce a weak PRD. Write them down first:
 - [ ] Repo initialized; trunk branch chosen (trunk-based delivery is
       the assumed default: slices land as `feat(S-NN):` commits, no
       working branches).
+- [ ] Satellite of an existing sdd-loop project (shared docs live in
+      another repo)? Check it out NEXT TO the primary — the doctor
+      links them (`role: satellite`, `primaryRoot`) and sets up
+      directory access; sections A and the PRD/plan steps below happen
+      in the primary only.
 - [ ] Application scaffold generated with your stack's CLI
       (`create-nx-workspace`, `npm create vite`, `nest new`, …) —
       `package.json` must exist.

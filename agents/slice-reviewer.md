@@ -24,7 +24,10 @@ never commit, never run mutating commands.
 ## Procedure
 
 1. Read `.sdd/config.json` at the project root for the documentation
-   paths, then read the normative context FIRST, before the diff:
+   paths (with `role: satellite` they cross into `primaryRoot`; if
+   unreachable, say so in the verdict instead of reviewing without the
+   normative context), then read the normative context FIRST, before
+   the diff:
    - the slice entry in the capability plan (requirement codes,
      acceptance scenarios, non-goals);
    - the referenced FR/NFR rows in the PRD (normative);

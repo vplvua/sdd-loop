@@ -48,6 +48,19 @@ scaffolds (docs, configs, `.sdd/config.json`). This is deliberate:
 plugin updates propagate by version bump without touching your repo,
 and there is nothing to drift.
 
+## Multi-repo projects
+
+One documentation set can serve several repos (app + backend). Exactly
+one repo is the **primary** (owns PRD, plan, journal, ADRs,
+current-state, cycles); the others are **satellites** — their
+`.sdd/config.json` declares `role: satellite` and `primaryRoot`
+(relative path to the primary checkout), and doc paths point through
+it. The doctor sets this up when it detects a sibling primary; it also
+offers to add the primary to `permissions.additionalDirectories` in the
+satellite's `.claude/settings.json` so every session can read the
+shared docs. Satellites keep their own verify chain, per-repo OpenSpec
+specs, and CLAUDE.md; shared docs are audited only from the primary.
+
 ## Install
 
 ```

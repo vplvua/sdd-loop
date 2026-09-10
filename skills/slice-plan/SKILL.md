@@ -9,7 +9,9 @@ Produce or audit the capability plan — the working plan of capability
 slices derived from the PRD. Paths and documentation language come from
 `.sdd/config.json` at the project root (defaults: `docs/capability-plan.md`,
 `docs/PRD.md`). If the config is missing, stop and run
-`/sdd-loop:project-doctor` first.
+`/sdd-loop:project-doctor` first. With `role: satellite`, doc paths
+cross into `primaryRoot` — if unreachable, ask the user to grant access
+(`--add-dir` or `permissions.additionalDirectories`) before planning.
 
 ## Inputs (read in this order)
 

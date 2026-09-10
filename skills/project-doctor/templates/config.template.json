@@ -1,5 +1,7 @@
 {
   "language": "{{DOCS_LANGUAGE}}",
+  "role": "primary",
+  "primaryRoot": null,
   "docsDir": "docs",
   "paths": {
     "prd": "docs/PRD.md",
