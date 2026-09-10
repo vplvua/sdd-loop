@@ -80,6 +80,12 @@ Satellite deltas to the checklist:
   Memory (4) / Improvement loop (7): owned by the primary. Verify they
   are reachable and report `N/A (primary: <path>)`; never scaffold or
   audit them from a satellite — run the full audit in the primary repo.
+  One exception: a satellite MAY keep engineering ADRs that concern
+  only this repo (its tooling, its verify chain, its infra) in a local
+  registry under a repo-prefixed series (e.g. `ADR-P-NNNN`) so plain
+  `ADR-NNNN` stays unambiguous across repos; product decisions and
+  cross-repo engineering decisions always go to the primary. Record
+  the series choice itself as the satellite's first local ADR.
 - Local layers — scaffold as usual for THIS repo's stack: verify chain
   (5), hooks conflict check, OpenSpec working layer (8, per-repo
   specs), maker ≠ checker (6, plugin enabled at project scope here
@@ -177,8 +183,10 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 ### 8. SDD working layer (recommended)
 
 - OpenSpec (or equivalent) initialized: `openspec/config.yaml` present,
-  `openspec validate --all --strict` wired into verify. If absent, point
-  to `npx openspec init` — do NOT vendor or replace its skills.
+  `openspec validate --all --strict` wired into verify. If absent,
+  offer to run `npx openspec init` (non-interactive) as part of the
+  scaffold — but do NOT vendor or replace its skills, and hand-fill
+  `config.yaml` with project context when init skips it.
 
 ### 9. Tooling (recommended, never blocking)
 
