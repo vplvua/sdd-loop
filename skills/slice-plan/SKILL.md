@@ -67,21 +67,28 @@ For each slice:
    validated; all task checkboxes `[x]`.
 2. The project's `verify` script passes (blocking gate).
 3. Smoke test against a real backing store: create / update / delete
-   the slice's data and check invariants.
+   the slice's data and check invariants. For external gateway
+   integrations, response fixtures are written from a CAPTURED REAL
+   call, not from documentation — until the first real call succeeds,
+   the integration counts as unverified regardless of test coverage.
 4. E2e scenarios for the slice's critical paths pass, derived from the
    acceptance scenarios.
-5. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
+5. Launch-and-look check: run the app, walk the slice's happy path
+   against the real integrations, confirm it works; note the check in
+   the current-state doc. This comes BEFORE the review freeze:
+   reviewing code that does not actually run wastes chained passes
+   (field lesson: five passes approved a login that was completely
+   broken against the real SMS gateway).
+6. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
    slice diff frozen at an explicit end SHA. After a `BLOCK`, the fix
    commits get their own follow-up pass (a new frozen range from the
    previous end SHA) — fixes are code too and introduce their own
    bugs; chain passes until `PASS`, with the union of ranges covering
    every commit that ships. For slices spanning multiple repositories,
-   every involved repository's frozen range is reviewed. `critical`/`high` findings fixed (verify re-run);
-   `medium`/`low` at the author's discretion, dispositions logged in
-   the retro.
-6. Launch-and-look check: run the app, walk the slice's happy path,
-   confirm it works; note the check in the current-state doc.
+   every involved repository's frozen range is reviewed.
+   `critical`/`high` findings fixed (verify re-run); `medium`/`low` at
+   the author's discretion, dispositions logged in the retro.
 7. Spec change archived per the project's SDD tooling (e.g. OpenSpec:
    validate --strict passes, change archived, active list empty).
 8. Current-state doc updated: phase, done, next 1–2 tasks, blockers.

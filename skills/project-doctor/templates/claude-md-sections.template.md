@@ -20,7 +20,9 @@ order — from general (state) to specific (specs):
   normative and testable.
 - Engineering decisions → new ADR in `{{ADR_DIR}}` (+ registry row).
   Product decisions → journal entry in `{{JOURNAL_PATH}}` + PRD edit
-  with changelog bump. ADRs are immutable (change = new ADR).
+  with changelog bump. An ADR is mutable while its slice is in flight
+  and immutable once the slice's spec change is archived (then:
+  change = new superseding ADR).
 - Update `{{CURRENT_STATE_PATH}}` at the end of every slice/session.
 - Update `{{TRACEABILITY_PATH}}` in every slice's DoD.
 

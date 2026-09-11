@@ -1,5 +1,6 @@
-<!-- MADR format. ADRs are immutable: changing a decision = a new ADR
-that supersedes the old one. -->
+<!-- MADR format. An ADR is mutable while its slice is in flight and
+becomes immutable once that slice's spec change is archived — after
+that, changing the decision = a new ADR that supersedes it. -->
 
 # ADR-{{NNNN}}: {{TITLE}}
 
