@@ -72,9 +72,12 @@ For each slice:
    acceptance scenarios.
 5. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
-   slice diff frozen at an explicit end SHA. For slices spanning
-   multiple repositories, every involved repository's frozen range is
-   reviewed. `critical`/`high` findings fixed (verify re-run);
+   slice diff frozen at an explicit end SHA. After a `BLOCK`, the fix
+   commits get their own follow-up pass (a new frozen range from the
+   previous end SHA) — fixes are code too and introduce their own
+   bugs; chain passes until `PASS`, with the union of ranges covering
+   every commit that ships. For slices spanning multiple repositories,
+   every involved repository's frozen range is reviewed. `critical`/`high` findings fixed (verify re-run);
    `medium`/`low` at the author's discretion, dispositions logged in
    the retro.
 6. Launch-and-look check: run the app, walk the slice's happy path,

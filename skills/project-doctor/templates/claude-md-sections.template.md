@@ -30,8 +30,10 @@ order — from general (state) to specific (specs):
 before every `git commit` via the sdd-loop hook. The hook fires BEFORE
 the whole command executes — never chain a fix with the commit
 (`fix … && git commit` verifies the unfixed tree); run fixes as a
-separate command first. E2e is intentionally NOT part of verify — run
-targeted e2e specs per slice.
+separate command first. Generated files bypass the format-on-edit hook
+— after a spec archive or any generator, run the project formatter as
+a separate command before committing. E2e is intentionally NOT part of
+verify — run targeted e2e specs per slice.
 
 ## Slice workflow (SDD)
 

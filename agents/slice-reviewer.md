@@ -52,6 +52,13 @@ never commit, never run mutating commands.
 4. Examine at least 5 candidate concerns. For each, either confirm it as
    a finding or reject it with a concrete reason ("I checked X, it is
    handled at Y"). Guessing is not rejecting.
+5. When a candidate hinges on runtime or database semantics (SQL
+   dialect behavior, collation, timezone math, driver quirks), verify
+   empirically in a disposable environment (e.g. a compose database)
+   instead of reasoning from memory — a demonstrated PoC beats
+   speculation, both for confirming and for rejecting. This stays
+   within read-only intent: touch only throwaway infrastructure, never
+   the project's files or real backing stores.
 
 ## Output format (your final message)
 
