@@ -43,7 +43,13 @@ Record in the artifact, marking estimates as estimates:
   answers, corrections).
 - **Tokens/cost**: rough estimate from session length and tool usage;
   ask the user for the exact `/cost` figure and record theirs if given —
-  never present an estimate as measured.
+  never present an estimate as measured. For multi-session slices, sum
+  per-session `/cost` figures (past sessions are readable via
+  `claude --resume` → `/cost`); transcript-derived estimates are a
+  LOWER BOUND — subagent usage is billed separately (field data: ~11%
+  undercount) — and must be marked as such. Also record the cost-vs-
+  context distribution when available (share of spend past 150k) — it
+  drives the session-hygiene guidance.
 - **Iterations**: verify-gate blocks, re-work loops until DoD.
 - **Defects**: bugs found in THIS slice that belong to previous slices.
 - **Spec adherence**: deviations from FR/NFR/ADR; decisions the agent

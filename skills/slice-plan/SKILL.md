@@ -72,7 +72,9 @@ For each slice:
    call, not from documentation — until the first real call succeeds,
    the integration counts as unverified regardless of test coverage.
 4. E2e scenarios for the slice's critical paths pass, derived from the
-   acceptance scenarios.
+   acceptance scenarios. Budget rate-limited external test resources
+   (OTP quotas, test accounts, sandbox credits) for retries and
+   per-platform runs, not for one ideal pass — and keep a spare.
 5. Launch-and-look check: run the app, walk the slice's happy path
    against the real integrations, confirm it works; note the check in
    the current-state doc. This comes BEFORE the review freeze:

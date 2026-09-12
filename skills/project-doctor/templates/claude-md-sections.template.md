@@ -41,12 +41,23 @@ verify — run targeted e2e specs per slice.
 
 The unit of work is a capability slice from `{{PLAN_PATH}}`. Per slice:
 propose the spec change → implement tasks (commits land on the trunk as
-`feat(S-NN): …`) → full DoD from the plan, including: adversarial review
-by the `sdd-loop:slice-reviewer` subagent (clean context, different
-model, one pass over the slice diff; freeze the range at an explicit end
-SHA — never `..HEAD` — and make no commits until the verdict lands;
+`feat(S-NN): …`) → full DoD from the plan, including: launch-and-look
+check against the real integrations BEFORE the review freeze (reviewing
+code that does not actually run wastes review passes), then adversarial
+review by the `sdd-loop:slice-reviewer` subagent (clean context,
+different model; freeze the range at an explicit end SHA — never
+`..HEAD` — and make no commits until the verdict lands; after a BLOCK
+the fix commits get their own follow-up pass, chained until PASS;
 critical/high findings block until fixed; a reviewer's suggested fix is
 a hypothesis — validate it with the slice's tests before adopting),
-launch-and-look check, archive the spec change, update
-`{{CURRENT_STATE_PATH}}` and `{{TRACEABILITY_PATH}}`, and close with
-`/sdd-loop:slice-retro` → `{{CYCLES_DIR}}/S-NN.md`.
+archive the spec change, update `{{CURRENT_STATE_PATH}}` and
+`{{TRACEABILITY_PATH}}`, and close with `/sdd-loop:slice-retro` →
+`{{CYCLES_DIR}}/S-NN.md`.
+
+Session hygiene: run one session per task group, not per slice. At
+phase boundaries (implementation → review → closing) start a FRESH
+session instead of compacting a long one — `{{CURRENT_STATE_PATH}}`
+and the spec artifacts are the handoff, which is exactly what makes a
+fresh context cheap. Field data: the costliest sessions are the ones
+that compact twice instead of restarting, and most spend lands past
+150k context.
