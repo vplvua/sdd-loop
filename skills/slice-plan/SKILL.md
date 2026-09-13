@@ -63,6 +63,13 @@ For each slice:
 
 ## Definition of Done (every slice)
 
+0. Multi-repo slices only: before implementation starts, every FR code
+   of the consumer side is checked against the contract the producer
+   side ships (DTOs, endpoints, fields). A gap is resolved in the spec
+   or filed as an open question in the journal at spec acceptance —
+   not discovered at the traceability matrix after the producer's ADR
+   is archived (field lesson: two contract gaps surfaced only there,
+   each one a superseding ADR away from a fix).
 1. Spec artifacts (proposal, design, tasks, spec deltas) filled and
    validated; all task checkboxes `[x]`.
 2. The project's `verify` script passes (blocking gate).

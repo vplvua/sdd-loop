@@ -41,6 +41,10 @@ client codegen, lockfiles) are regenerated in the SAME commit as the
 source change — never planned as a separate "update the snapshot"
 task: the gate rejects the tree where the snapshot lags, so that task
 physically cannot become a second commit (blocked twice in the field).
+A test that reads a shape owned by other code (CLI output, a fixture,
+an API response) asserts the field EXISTS before asserting its value —
+otherwise a shape change elsewhere turns every assertion vacuous and
+the test stays green (verify cannot see this; e2e is outside the gate).
 
 ## Slice workflow (SDD)
 
