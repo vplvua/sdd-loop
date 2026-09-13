@@ -44,8 +44,11 @@ Record in the artifact, marking estimates as estimates:
 - **Tokens/cost**: rough estimate from session length and tool usage;
   ask the user for the exact `/cost` figure and record theirs if given —
   never present an estimate as measured. For multi-session slices, sum
-  per-session `/cost` figures (past sessions are readable via
-  `claude --resume` → `/cost`); transcript-derived estimates are a
+  per-session `/cost` figures — preferably the ones each session's
+  closing task recorded; past sessions are readable via
+  `claude --resume` → `/cost` — and count paid contexts, not planned
+  sessions (a session split by an owner pause is two contexts);
+  transcript-derived estimates are a
   LOWER BOUND — subagent usage is billed separately (field data: ~11%
   undercount) — and must be marked as such. Also record the cost-vs-
   context distribution when available (share of spend past 150k) — it

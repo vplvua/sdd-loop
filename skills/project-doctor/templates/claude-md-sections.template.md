@@ -35,7 +35,12 @@ the whole command executes — never chain a fix with the commit
 separate command first. Generated files bypass the format-on-edit hook
 — after a spec archive or any generator, run the project formatter as
 a separate command before committing. E2e is intentionally NOT part of
-verify — run targeted e2e specs per slice.
+verify — run targeted e2e specs per slice. Generated artifacts that
+verify checks against the source (API/OpenAPI snapshots, schema or
+client codegen, lockfiles) are regenerated in the SAME commit as the
+source change — never planned as a separate "update the snapshot"
+task: the gate rejects the tree where the snapshot lags, so that task
+physically cannot become a second commit (blocked twice in the field).
 
 ## Slice workflow (SDD)
 
@@ -60,4 +65,10 @@ session instead of compacting a long one — `{{CURRENT_STATE_PATH}}`
 and the spec artifacts are the handoff, which is exactly what makes a
 fresh context cheap. Field data: the costliest sessions are the ones
 that compact twice instead of restarting, and most spend lands past
-150k context.
+150k context. A pause for an owner action (real-call capture,
+launch-and-look with real credentials) is also a session boundary: a
+context that waits hours for the owner is paid for again when it
+resumes — close the session with a handoff and start review/closing
+fresh. The last task of every session records the session's `/cost`
+in its checkbox, so the slice total is a sum, not an after-the-fact
+reconstruction.

@@ -93,6 +93,11 @@ For each slice:
    the author's discretion, dispositions logged in the retro.
 7. Spec change archived per the project's SDD tooling (e.g. OpenSpec:
    validate --strict passes, change archived, active list empty).
+   After archive the tooling no longer knows the change (`status` →
+   not found, `list` → empty, apply cannot drive it), so steps 8–10
+   are tracked ONLY by the current-state doc: name them explicitly
+   under "Next" before the archiving session ends, or they get lost
+   (field lesson: a closing task survived only a handwritten handoff).
 8. Current-state doc updated: phase, done, next 1–2 tasks, blockers.
 9. Traceability matrix updated: FR → slice → spec → test → demo check.
 10. Session retrospective via `/sdd-loop:slice-retro`: metrics and
