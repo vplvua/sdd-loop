@@ -63,6 +63,12 @@ For each slice:
 
 ## Definition of Done (every slice)
 
+Throughout the slice: every session that works on it has a row in the
+session ledger `<cyclesDir>/S-NN.sessions.md` (appended at session
+start, cost filled by the session's close task — see the CLAUDE.md
+session-ledger rules); the retro needs every row's cost measured or
+marked `not measured: <reason>`.
+
 0. Multi-repo slices only: before implementation starts, every FR code
    of the consumer side is checked against the contract the producer
    side ships (DTOs, endpoints, fields). A gap is resolved in the spec
@@ -127,8 +133,9 @@ For each slice:
 8. Current-state doc updated: phase, done, next 1–2 tasks, blockers.
 9. Traceability matrix updated: FR → slice → spec → test → demo check.
 10. Session retrospective via `/sdd-loop:slice-retro`: metrics and
-    friction → cycles doc; small process fixes (≤3) applied, normative
-    changes proposed to the user.
+    friction → cycles doc (session list and cost from the ledger);
+    small process fixes (≤3) applied, normative changes proposed to
+    the user.
 
 ## Procedure
 

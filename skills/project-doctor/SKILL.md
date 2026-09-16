@@ -199,8 +199,9 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 
 ### 7. Improvement loop
 
-- `paths.cyclesDir` exists with a README retro template
-  (`templates/cycles-README.template.md`).
+- `paths.cyclesDir` exists with a README carrying the retro and
+  session-ledger templates (`templates/cycles-README.template.md`);
+  CLAUDE.md carries the session-ledger rules.
 - The retro (`/sdd-loop:slice-retro`) is wired as the final DoD step in
   the capability plan and CLAUDE.md.
 

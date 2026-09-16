@@ -31,7 +31,9 @@ Skip this section when the retro runs inside the slice session.
   transcripts (the reviewer) sit in `<id>/subagents/` and carry
   `isSidechain: true` — skip those lines when reading the owner dialogue.
   Multi-repo slices: repeat per involved repo.
-- **Which sessions**: those whose first-to-last timestamps overlap the
+- **Which sessions**: the session ledger `<cyclesDir>/S-NN.sessions.md`
+  lists them by id — use it. Only for a slice without a ledger, fall
+  back to the sessions whose first-to-last timestamps overlap the
   slice's commits (`git log --format='%h %ad' --date=iso <first>^..<end>`),
   plus the propose session just before the first commit — it often has
   no commit of its own. The first user turn names the command
@@ -89,7 +91,12 @@ Record in the artifact, marking estimates as estimates:
 
 - **Time**: calendar session time; approximate net human time (reviews,
   answers, corrections).
-- **Tokens/cost**: rough estimate from session length and tool usage;
+- **Tokens/cost**: the session ledger `<cyclesDir>/S-NN.sessions.md` is
+  the source — sum its cost cells, count its rows as paid contexts, and
+  name every row still empty or `not measured` (for an empty one ask
+  for `claude --resume <id>` → `/cost` before writing the metric; the
+  retro session adds its own row too). Without a ledger: rough
+  estimate from session length and tool usage;
   ask the user for the exact `/cost` figure and record theirs if given —
   never present an estimate as measured. For multi-session slices, sum
   per-session `/cost` figures — preferably the ones each session's

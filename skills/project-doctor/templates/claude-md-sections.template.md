@@ -108,11 +108,36 @@ runs, owner, review, closing, all in one context); a 12 h session with
   slice — a fresh closing session qualifies; don't open an extra
   context just to spawn it.
 
+Session ledger — `{{CYCLES_DIR}}/S-NN.sessions.md`, one per slice (in
+the primary repo; satellites write through `primaryRoot`). It is the
+list of every session that worked on the slice, so parallel and
+unrelated sessions cannot blur the retro's metrics:
+
+- A session appends its row when it STARTS work on the slice's tasks
+  (propose, apply, review, closing, retro) — not at the end, so a
+  session lost to `/clear`, a crash or a forgotten close still shows
+  up. The id is `$CLAUDE_CODE_SESSION_ID` (the transcript name and the
+  `claude --resume` id); a resumed session already has its row. A
+  session about something else writes nothing. Append with a shell
+  `>>` (parallel sessions share the file) and commit the row with the
+  session's next commit. The first session creates the file from the
+  cycles README template.
+- Row: `| <full session id> | <repo> | <change · task group> | <model> |
+  <started, local MM-DD HH:MM> | <cost> |`, compact, under
+  `<!-- prettier-ignore -->`. Cost is empty while the session is open,
+  then the measured `/cost` total, or `not measured: <reason>`. A model
+  switch mid-session is recorded in the model cell (`A → B`).
+- At session start, read the ledger with the handoff: a CLOSED session
+  whose cost is still empty → ask the owner for
+  `claude --resume <id>` → `/cost`, naming the id (a session still
+  running in parallel is not a gap — ask if unsure).
+
 Task list hygiene (the change's `tasks.md` or equivalent):
 
 - Every session block ends with a close task — tick the boxes, write
-  the handoff, record the session's `/cost` — the LAST block included,
-  so the slice total is a sum, not an after-the-fact reconstruction.
+  the handoff, write the session's `/cost` into its ledger row — the
+  LAST block included, so the slice total is a sum, not an
+  after-the-fact reconstruction.
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.

@@ -1,7 +1,22 @@
 # Slice retrospectives
 
-One file per slice (`S-NN.md`), written by `/sdd-loop:slice-retro` at
-the end of the slice session. Template:
+Two files per slice:
+
+- `S-NN.sessions.md` — the session ledger: created by the slice's
+  first session, one row appended by every session that works on the
+  slice, cost filled by each session's close task. Template:
+
+```markdown
+# S-NN — sessions
+
+<!-- prettier-ignore -->
+| Session id | Repo | Change · tasks | Model | Started | /cost |
+| --- | --- | --- | --- | --- | --- |
+| <full id> | <repo> | <change> · <task group> | <model> | MM-DD HH:MM | $0.00 or not measured: <reason> |
+```
+
+- `S-NN.md` — the retro, written by `/sdd-loop:slice-retro` at the end
+  of the slice. Template:
 
 ```markdown
 # S-NN — <name>: retro
