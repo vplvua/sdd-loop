@@ -6,30 +6,62 @@ description: Post-slice session retrospective — collect metrics and process fr
 # Slice Retrospective
 
 Analyze the just-finished slice session and turn friction into process
-improvements. Run at the END of the slice session, while the dialogue is
-still in context. The retro artifact is `<cyclesDir>/S-NN.md` (path,
-template pointer, and documentation language come from
+improvements. Preferably run at the END of the slice session, while the
+dialogue is still in context; when it runs later in a fresh session (or
+the slice spanned several), first reconstruct the dialogue from the
+transcripts — see "Dialogue from transcripts". The retro artifact is
+`<cyclesDir>/S-NN.md` (path, template pointer, and documentation
+language come from
 `.sdd/config.json`; default `docs/cycles/`). With `role: satellite` the
 cycles dir lives in the primary repo via `primaryRoot` — one retro per
 slice covers all involved repos; if the path is unreachable, ask the
 user to grant access (`--add-dir` or
 `permissions.additionalDirectories`) first.
 
-**Retro in a fresh session** (the slice session closed, or the retro
-spans several sessions): the dialogue is no longer in context — read
-it from the transcripts instead of reconstructing it from memory or
-commits. Transcripts live in `~/.claude/projects/<slug>/*.jsonl`, where the
-slug is the repo's absolute path with every `/` replaced by `-` (the reviewer subagent's in
-`<session-id>/subagents/`); pick the sessions whose timestamps fall
-between the first and last commit of the slice range, per involved
-repo. Count from them: user messages that correct or re-explain,
-rejected `AskUserQuestion` / permission prompts, and verify-gate blocks
-(`BLOCKED: 'npm run verify' failed` in tool results — the gate leaves
-no trace in git, so the transcript is the only record). Past sessions'
-exact cost stays `claude --resume <id>` → `/cost`.
-
 This step is what makes the process self-improving: fixes applied here
 land in CLAUDE.md, skills, and configs — the next slice starts cheaper.
+
+## Dialogue from transcripts (only when it is not in context)
+
+Skip this section when the retro runs inside the slice session.
+
+- **Where**: `~/.claude/projects/<slug>/*.jsonl`, slug = the repo's
+  absolute path with every `/` replaced by `-`; one file per session,
+  file name = session id (what `claude --resume <id>` takes). Subagent
+  transcripts (the reviewer) sit in `<id>/subagents/` and carry
+  `isSidechain: true` — skip those lines when reading the owner dialogue.
+  Multi-repo slices: repeat per involved repo.
+- **Which sessions**: those whose first-to-last timestamps overlap the
+  slice's commits (`git log --format='%h %ad' --date=iso <first>^..<end>`),
+  plus the propose session just before the first commit — it often has
+  no commit of its own. The first user turn names the command
+  (`<command-name>/opsx:apply` + `<command-args>`), which confirms the
+  change. Each such file is one paid context — that count, not the
+  planned sessions, goes into the cost metric.
+- **What to extract** — `transcript-signals.py <file> "<verifyCommand>"`
+  next to this skill (stdlib Python) prints all of it:
+  - owner turns: `type: "user"` text, excluding `isMeta` entries (skill
+    bodies, subagent hand-backs) and `<local-command-caveat>`;
+  - rejected tool calls: a `tool_result` containing "The user doesn't
+    want to proceed with this tool use", paired with the `tool_use` it
+    rejected (for `AskUserQuestion` — the questions asked) and the next
+    owner turn: the escalation-quality signal;
+  - verify-gate blocks: a `tool_result` with `PreToolUse` + `BLOCKED` +
+    the verify command, and the failing check — git cannot show them;
+  - model switches: `/model` commands and changes of `message.model`
+    (a proposal on one model and an apply on another is a cost and a
+    maker ≠ checker fact);
+  - pasted `/cost` / `/usage` (a user turn starting `Session\n\nTotal
+    cost:`): the measured figure and the share past 150k;
+  - idle gaps: > 30 min between the agent's turn and the next user
+    entry — they explain wall-vs-API time and the cache misses `/cost`
+    reports.
+- **Cost**: a session with no pasted `/cost` is priced from the
+  transcript only as a floor, and not at all for models without known
+  rates — ask the user for `claude --resume <id>` → `/cost`, naming the
+  exact session id.
+- **Privacy**: the retro artifact quotes owner turns sparingly (the
+  words that carry the lesson) and never pastes raw transcript content.
 
 ## Signal sources (walk all four)
 
@@ -91,8 +123,8 @@ Split findings into two buckets:
 ## Procedure
 
 1. Identify the slice ID (S-NN) and its commit range; if the slice's
-   sessions are not in this context, locate their transcripts first
-   (see "Retro in a fresh session").
+   dialogue is not in this context, reconstruct it first (see
+   "Dialogue from transcripts").
 2. Walk the four signal sources; collect metrics.
 3. Write `<cyclesDir>/S-NN.md` per the template in
    `<cyclesDir>/README.md`, in the documentation language from the
