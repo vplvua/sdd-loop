@@ -56,7 +56,9 @@ never commit, never run mutating commands.
      check bypass added in the range — inline disable comments
      (`eslint-disable…`, `@ts-ignore`, `@ts-expect-error`), a rule
      switched off or downgraded, a new ignore pattern — is a finding
-     unless a recorded decision (ADR/journal entry) covers it.
+     unless a recorded decision (ADR/journal entry) covers it. Not a
+     bypass: `@ts-expect-error` in a type-level test whose expected
+     compile error is the assertion itself.
    - **Test adequacy**: do the tests actually assert the acceptance
      scenarios? Would they fail if the behavior regressed? Flag
      assertion-free or tautological tests.

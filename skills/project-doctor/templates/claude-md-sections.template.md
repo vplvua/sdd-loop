@@ -41,7 +41,8 @@ fixed, never silenced: no inline disable comments (`eslint-disable…`,
 `@ts-ignore`), no rule switched off or downgraded, no new ignore
 patterns to make the gate green. A genuine false positive changes the
 lint config as a recorded decision (ADR or journal entry) in its own
-commit. Generated artifacts that
+commit. Not a bypass: `@ts-expect-error` in a type-level test, where
+the expected compile error IS the assertion (say so in its comment). Generated artifacts that
 verify checks against the source (API/OpenAPI snapshots, schema or
 client codegen, lockfiles) are regenerated in the SAME commit as the
 source change — never planned as a separate "update the snapshot"

@@ -177,7 +177,16 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 - Lint in verify fails on warnings (`--max-warnings 0` or equivalent).
   Existing warnings are a GAP whose fix is fixing the code — never
   inline disables, rule downgrades, or ignore patterns added to reach
-  green.
+  green. Count existing inline disables and report those without a
+  recorded decision; `@ts-expect-error` in type-level tests (the
+  expected error is the assertion) is not a bypass.
+- The format check does not see machine-local files. Formatters read
+  the project's ignore files, not the user's global git excludes, so a
+  harness-written file ignored only globally (`.claude/settings.local.json`,
+  rewritten by Claude Code on permission grants) turns verify red for
+  every session in the checkout and blocks every commit. Run the format
+  check once; if such a file fails it, add it to the formatter's ignore
+  file (field: the mobile app's gate went red mid-slice this way).
 - Hooks: this plugin ships format-on-edit and verify-on-commit hooks —
   active automatically wherever the plugin is enabled. Check only that
   the project does not have conflicting duplicate hooks in
