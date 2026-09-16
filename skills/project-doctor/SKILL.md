@@ -42,7 +42,9 @@ Then ask:
 4. Anything already decided that should become day-0 ADRs (stack,
    architecture, auth approach, hosting).
 
-Write the answers to `.sdd/config.json` from `templates/config.template.json`.
+Write the answers to `.sdd/config.json` from `templates/config.template.json`
+(`templatesVersion` = the plugin version from
+`../../.claude-plugin/plugin.json` — what the scaffold was built from).
 
 ## Config contract (`.sdd/config.json`)
 
@@ -132,7 +134,13 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   it in generate mode once the PRD is ready; scaffold skeleton:
   `templates/capability-plan.template.md`).
 - Traceability matrix at `paths.traceability`
-  (`templates/traceability-matrix.template.md`).
+  (`templates/traceability-matrix.template.md`). If the project runs a
+  Markdown formatter and the matrix is a padded table without the
+  template's `<!-- prettier-ignore -->` marker, flag it: the formatter
+  pads every row to the widest cell, so widening one cell rewrites the
+  whole table (field: 287 changed lines for a one-cell edit, a 1.1 MB
+  file that is 79 KB compact). Fix: one-time conversion to compact
+  rows under the marker.
 - Assumptions/open-questions journal at `paths.journal`
   (`templates/assumptions-journal.template.md`).
 
@@ -145,6 +153,17 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   specs → ADRs, plus the quality-gates and slice-workflow sections
   (`templates/claude-md-sections.template.md`). Merge into an existing
   CLAUDE.md — never clobber it.
+- **Template drift.** Plugin releases add rules to the CLAUDE.md
+  sections template and to the DoD in `sdd-loop:slice-plan`; an
+  already-scaffolded project never receives them on its own. Read the
+  plugin version from `../../.claude-plugin/plugin.json` (relative to
+  this skill) and compare with `templatesVersion` in the config. When
+  it is older or absent, reconcile RULE BY RULE, by meaning, not text:
+  a template rule present in CLAUDE.md (or the plan's DoD) in any
+  wording — including a stronger, project-specific one — is OK; an
+  absent rule is a GAP listed with the proposed text. Merge only what
+  the user accepts, never rewrite project wording, then set
+  `templatesVersion` to the plugin version.
 
 ### 5. Verification layer
 
@@ -155,6 +174,10 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   detected in the project; propose additions (e.g. a dead-code/dupes
   auditor) as recommendations, not hard failures.
 - Run it once: `OK` requires a passing verify, not just an existing one.
+- Lint in verify fails on warnings (`--max-warnings 0` or equivalent).
+  Existing warnings are a GAP whose fix is fixing the code — never
+  inline disables, rule downgrades, or ignore patterns added to reach
+  green.
 - Hooks: this plugin ships format-on-edit and verify-on-commit hooks —
   active automatically wherever the plugin is enabled. Check only that
   the project does not have conflicting duplicate hooks in

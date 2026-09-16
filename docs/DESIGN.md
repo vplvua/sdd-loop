@@ -93,7 +93,11 @@ Everything the plugin writes into a target project lives in normal
 project files (docs/, CLAUDE.md, package.json, .claude/settings.json for
 project-local hook config if needed) + `.sdd/config.json` for doctor
 state. The plugin itself stays read-only/upgradeable; drift between
-scaffolded docs and templates is expected and fine — doctor reports, not
+scaffolded docs and templates is expected and fine. Rules added to the
+templates in later releases reach an existing project only through the
+doctor's rule-by-rule reconciliation, keyed by `templatesVersion` in
+`.sdd/config.json` (slice-retro proposes it when the plugin is newer)
+— the doctor proposes merges, never
 reverts.
 
 ## Resolved questions

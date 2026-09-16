@@ -14,5 +14,6 @@
     "cyclesDir": "docs/cycles"
   },
   "verifyCommand": "npm run verify",
-  "openspec": true
+  "openspec": true,
+  "templatesVersion": "{{PLUGIN_VERSION}}"
 }

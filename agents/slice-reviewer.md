@@ -52,7 +52,11 @@ never commit, never run mutating commands.
      the requirement codes; scope creep beyond the slice's non-goals;
      product decisions taken in code without a journal entry.
    - **Convention violations**: project convention docs, module
-     boundaries, explicit "do not introduce" lists.
+     boundaries, explicit "do not introduce" lists. Any lint or type
+     check bypass added in the range — inline disable comments
+     (`eslint-disable…`, `@ts-ignore`, `@ts-expect-error`), a rule
+     switched off or downgraded, a new ignore pattern — is a finding
+     unless a recorded decision (ADR/journal entry) covers it.
    - **Test adequacy**: do the tests actually assert the acceptance
      scenarios? Would they fail if the behavior regressed? Flag
      assertion-free or tautological tests.

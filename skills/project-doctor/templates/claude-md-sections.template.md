@@ -35,7 +35,13 @@ the whole command executes — never chain a fix with the commit
 separate command first. Generated files bypass the format-on-edit hook
 — after a spec archive or any generator, run the project formatter as
 a separate command before committing. E2e is intentionally NOT part of
-verify — run targeted e2e specs per slice. Generated artifacts that
+verify — run targeted e2e specs per slice. Lint fails on warnings
+(`--max-warnings 0` or the linter's equivalent), and a warning is
+fixed, never silenced: no inline disable comments (`eslint-disable…`,
+`@ts-ignore`), no rule switched off or downgraded, no new ignore
+patterns to make the gate green. A genuine false positive changes the
+lint config as a recorded decision (ADR or journal entry) in its own
+commit. Generated artifacts that
 verify checks against the source (API/OpenAPI snapshots, schema or
 client codegen, lockfiles) are regenerated in the SAME commit as the
 source change — never planned as a separate "update the snapshot"
@@ -82,17 +88,25 @@ archive the spec change, update `{{CURRENT_STATE_PATH}}` and
 `{{TRACEABILITY_PATH}}`, and close with `/sdd-loop:slice-retro` →
 `{{CYCLES_DIR}}/S-NN.md`.
 
-Session hygiene: run one session per task group, not per slice. At
-phase boundaries (implementation → review → closing) start a FRESH
-session instead of compacting a long one — `{{CURRENT_STATE_PATH}}`
-and the spec artifacts are the handoff, which is exactly what makes a
-fresh context cheap. Field data: the costliest sessions are the ones
-that compact twice instead of restarting, and most spend lands past
-150k context. A pause for an owner action (real-call capture,
-launch-and-look with real credentials) is also a session boundary: a
-context that waits hours for the owner is paid for again when it
-resumes — close the session with a handoff and start review/closing
-fresh.
+Session hygiene: run one session per task group, not per slice, and
+start a FRESH session at a boundary instead of compacting a long one —
+`{{CURRENT_STATE_PATH}}` and the spec artifacts are the handoff, which
+is exactly what makes a fresh context cheap. Draw the boundaries by
+the NATURE of the work, not only by phase: a context that WAITS (device
+and e2e runs, builds, deploys, rate-limit windows, the owner) is billed
+like one that writes — every resumed turn re-reads the whole context,
+and a pause past the cache TTL re-caches it. Field data: two adjacent
+sessions of one slice cost $15 in 30 min (code) and $86 in 6.5 h (device
+runs, owner, review, closing, all in one context); a 12 h session with
+49 min of API time spent 86% of its cost past 150k. So:
+
+- Plan "reality" (device runs, launch-and-look, real-call capture) and
+  "review + closing" as separate sessions.
+- A question to the owner that may wait (overnight, an action on their
+  side) ends the session: hand off instead of holding a large context.
+- The reviewer is spawned from a context that did NOT develop the
+  slice — a fresh closing session qualifies; don't open an extra
+  context just to spawn it.
 
 Task list hygiene (the change's `tasks.md` or equivalent):
 

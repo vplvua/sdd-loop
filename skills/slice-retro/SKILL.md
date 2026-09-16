@@ -46,7 +46,10 @@ land in CLAUDE.md, skills, and configs — the next slice starts cheaper.
 4. **Documentation and settings vs reality**: which statements in the
    PRD / capability plan / CLAUDE.md / skills / SDD rules turned out
    inaccurate, outdated, or missing; where the configured process
-   diverged from what was actually practiced.
+   diverged from what was actually practiced. If the installed plugin
+   is newer than `templatesVersion` in the config, add "run
+   `/sdd-loop:project-doctor` to reconcile template drift" to the
+   proposals — the doctor does the rule-by-rule merge, not the retro.
 
 ## Metrics
 

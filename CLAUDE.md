@@ -16,6 +16,12 @@ repo is both the plugin and its own marketplace
 - Per retro / field run apply AT MOST 3 small fixes to skills,
   templates, or the agent — the same ≤3 rule `slice-retro` prescribes.
   Anything bigger: propose first, change after agreement.
+- Where a lesson lands decides who gets it: skills and the agent reach
+  every installed project on the next session; the CLAUDE.md sections
+  template and the DoD copied into a project's plan reach it only when the doctor
+  reconciles template drift (`templatesVersion`). A lesson that must
+  act in live projects now goes into a skill/agent, not only the
+  template.
 - Every substantive change bumps `version` in
   `.claude-plugin/plugin.json` in the SAME commit — installed copies
   auto-update on session start, an unbumped change reaches nobody.

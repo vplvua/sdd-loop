@@ -84,7 +84,14 @@ For each slice:
    per-platform runs, not for one ideal pass — and keep a spare.
 5. Launch-and-look check: run the app, walk the slice's happy path
    against the real integrations, confirm it works; note the check in
-   the current-state doc. This comes BEFORE the review freeze:
+   the current-state doc. Triage every owner remark from the check:
+   a DEFECT against the slice's normative sources (spec, design
+   canvas, PRD) is fixed inside the slice; a NEW REQUIREMENT (the
+   sources don't say it, or say otherwise) becomes a journal entry and
+   a separate change — never slipped into the slice (field lesson: two
+   remarks on one screen went opposite ways — a spacing defect vs an
+   equal-card-height requirement — and the split was re-derived in
+   dialogue each time). This comes BEFORE the review freeze:
    reviewing code that does not actually run wastes chained passes
    (field lesson: five passes approved a login that was completely
    broken against the real SMS gateway).
@@ -105,7 +112,13 @@ For each slice:
    `critical`/`high` findings fixed (verify re-run); `medium`/`low` at
    the author's discretion, dispositions logged in the retro.
 7. Spec change archived per the project's SDD tooling (e.g. OpenSpec:
-   validate --strict passes, change archived, active list empty).
+   validate --strict passes, change archived, active list empty). An
+   OpenSpec MODIFIED delta REPLACES the whole requirement block, so
+   before archiving confirm each MODIFIED block carries the full
+   requirement — every scenario of the main spec either kept or
+   dropped on purpose; the tool itself already fails loudly on an
+   unmatched header, so no post-archive text comparison is needed.
+   Format the rewritten main specs before committing the archive.
    After archive the tooling no longer knows the change (`status` →
    not found, `list` → empty, apply cannot drive it), so steps 8–10
    are tracked ONLY by the current-state doc: name them explicitly
