@@ -90,9 +90,15 @@ For each slice:
    broken against the real SMS gateway).
 6. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
-   slice diff frozen at an explicit end SHA. After a `BLOCK`, the fix
-   commits get their own follow-up pass (a new frozen range from the
-   previous end SHA) — fixes are code too and introduce their own
+   slice diff frozen as `<first slice commit>^..<explicit end SHA>`.
+   The start is the slice's FIRST commit — recorded in session 1's
+   handoff — never the start of the session running the review, and
+   the `^` is mandatory: `git diff a..b` excludes `a` (field lesson:
+   three ranges in one slice series hid session 1, then the first
+   commit itself; only reviewers reading around the range caught it).
+   After a `BLOCK`, the fix commits get their own follow-up pass (a new
+   frozen range `<previous end SHA>..<new end SHA>` — no `^` here, the
+   previous end was already reviewed) — fixes are code too and introduce their own
    bugs; chain passes until `PASS`, with the union of ranges covering
    every commit that ships. For slices spanning multiple repositories,
    every involved repository's frozen range is reviewed.

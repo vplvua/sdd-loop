@@ -170,7 +170,8 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   plugin — verify the plugin is enabled at project scope so teammates
   get it too).
 - CLAUDE.md documents the review DoD step and the freeze-range rule
-  (explicit end SHA, no commits until the verdict lands) — part of the
+  (`<first slice commit>^..<explicit end SHA>`, no commits until the
+  verdict lands) — part of the
   CLAUDE.md sections template.
 
 ### 7. Improvement loop

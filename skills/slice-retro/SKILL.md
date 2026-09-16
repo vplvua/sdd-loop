@@ -15,6 +15,19 @@ slice covers all involved repos; if the path is unreachable, ask the
 user to grant access (`--add-dir` or
 `permissions.additionalDirectories`) first.
 
+**Retro in a fresh session** (the slice session closed, or the retro
+spans several sessions): the dialogue is no longer in context — read
+it from the transcripts instead of reconstructing it from memory or
+commits. Transcripts live in `~/.claude/projects/<slug>/*.jsonl`, where the
+slug is the repo's absolute path with every `/` replaced by `-` (the reviewer subagent's in
+`<session-id>/subagents/`); pick the sessions whose timestamps fall
+between the first and last commit of the slice range, per involved
+repo. Count from them: user messages that correct or re-explain,
+rejected `AskUserQuestion` / permission prompts, and verify-gate blocks
+(`BLOCKED: 'npm run verify' failed` in tool results — the gate leaves
+no trace in git, so the transcript is the only record). Past sessions'
+exact cost stays `claude --resume <id>` → `/cost`.
+
 This step is what makes the process self-improving: fixes applied here
 land in CLAUDE.md, skills, and configs — the next slice starts cheaper.
 
@@ -74,7 +87,9 @@ Split findings into two buckets:
 
 ## Procedure
 
-1. Identify the slice ID (S-NN) and its commit range.
+1. Identify the slice ID (S-NN) and its commit range; if the slice's
+   sessions are not in this context, locate their transcripts first
+   (see "Retro in a fresh session").
 2. Walk the four signal sources; collect metrics.
 3. Write `<cyclesDir>/S-NN.md` per the template in
    `<cyclesDir>/README.md`, in the documentation language from the

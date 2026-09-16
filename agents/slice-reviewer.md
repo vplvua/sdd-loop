@@ -1,6 +1,6 @@
 ---
 name: slice-reviewer
-description: Adversarial code reviewer for a finished capability slice. Spawn with a clean context ONE time per slice, after the verify gate and e2e pass and BEFORE the slice's spec change is archived. Runs on a different model than the author session (maker ≠ checker). Pass the slice ID (S-NN) and the commit range in the prompt — with an EXPLICIT end SHA (`<start>..<sha>`, never `..HEAD`); the author session must not commit until the verdict lands.
+description: Adversarial code reviewer for a finished capability slice. Spawn with a clean context ONE time per slice, after the verify gate and e2e pass and BEFORE the slice's spec change is archived. Runs on a different model than the author session (maker ≠ checker). Pass the slice ID (S-NN) and the commit range in the prompt — as `<first slice commit>^..<end sha>` — starting at the slice's FIRST commit (not the current session's) and including it via `^`, with an EXPLICIT end SHA, never `..HEAD`; the author session must not commit until the verdict lands.
 model: sonnet
 tools: Read, Grep, Glob, Bash
 ---
@@ -17,9 +17,16 @@ never commit, never run mutating commands.
 ## Inputs (from the spawning prompt)
 
 - Slice ID `S-NN` and the commit range with explicit SHAs on both ends
-  (e.g. `abc123..def456`). If given a moving ref (`HEAD`, a branch name),
+  (e.g. `abc123^..def456`). If given a moving ref (`HEAD`, a branch name),
   resolve it to a SHA immediately and state the resolved range in your
   verdict; the range you review is frozen at that SHA.
+- Check the START before reviewing: `git diff a..b` EXCLUDES `a`. Run
+  `git log --oneline <start>~3..<end>` — if `<start>` itself, or commits
+  just before it, belong to the slice (`S-NN` in the subject, the slice's
+  spec change, a vendored contract), widen the range to the slice's
+  first commit with `^` and state the widened range in the verdict.
+  Ranges written from the first commit without `^`, or from the start
+  of the last session, silently hid slice commits in the field.
 
 ## Procedure
 
