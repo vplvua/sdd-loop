@@ -75,7 +75,12 @@ marked `not measured: <reason>`.
    or filed as an open question in the journal at spec acceptance —
    not discovered at the traceability matrix after the producer's ADR
    is archived (field lesson: two contract gaps surfaced only there,
-   each one a superseding ADR away from a fix).
+   each one a superseding ADR away from a fix). Each repo's half
+   counts as proposed / applied / archived only by what that repo's
+   tooling shows (`openspec list` / `openspec/changes/` there), never
+   by the other repo's handoff — the handoff checks it, not retells it
+   (field lesson: a half interrupted at its first question was recorded
+   as "proposed in both repos" and the claim lived for five sessions).
 1. Spec artifacts (proposal, design, tasks, spec deltas) filled and
    validated; all task checkboxes `[x]`.
 2. The project's `verify` script passes (blocking gate).
@@ -104,11 +109,17 @@ marked `not measured: <reason>`.
 6. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
    slice diff frozen as `<first slice commit>^..<explicit end SHA>`.
-   The start is the slice's FIRST commit — recorded in session 1's
-   handoff — never the start of the session running the review, and
+   The start is the slice's FIRST commit — the first commit of the
+   change's tasks (task 1.1), whatever its prefix: a `docs` PRD edit or
+   a `test`/`chore` capture of real responses counts, the first `feat`
+   is NOT the anchor — recorded in session 1's handoff; never the start
+   of the session running the review, and
    the `^` is mandatory: `git diff a..b` excludes `a` (field lesson:
    three ranges in one slice series hid session 1, then the first
-   commit itself; only reviewers reading around the range caught it).
+   commit itself; later both halves of a two-repo slice anchored on the
+   first `feat` and left out the task-1.1 commits — one of them the
+   capture holding scrubbed real legacy data; only reviewers reading
+   around the range caught it).
    After a `BLOCK`, the fix commits get their own follow-up pass (a new
    frozen range `<previous end SHA>..<new end SHA>` — no `^` here, the
    previous end was already reviewed) — fixes are code too and introduce their own

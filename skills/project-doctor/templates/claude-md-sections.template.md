@@ -8,7 +8,10 @@ Before planning or implementing any substantive change, read in this
 order — from general (state) to specific (specs):
 
 1. `{{CURRENT_STATE_PATH}}` — current state and next-step guidance
-   (persistent memory bank: a snapshot, not a log)
+   (persistent memory bank: a snapshot, not a log). A claim it makes
+   about tooling state (a change proposed, applied, archived — in this
+   or another repo) is checked against the tooling before acting on
+   it and before writing it.
 2. `{{PLAN_PATH}}` — the working plan: capability slices and the
    per-slice Definition of Done
 3. Accepted specs ({{SPECS_LOCATION}})
@@ -78,8 +81,9 @@ check against the real integrations BEFORE the review freeze (reviewing
 code that does not actually run wastes review passes), then adversarial
 review by the `sdd-loop:slice-reviewer` subagent (clean context,
 different model; freeze the range as `<first slice commit>^..<end SHA>`
-— the slice's first commit (recorded in session 1's handoff), not the
-reviewing session's start; the `^` because `git diff a..b` excludes
+— the slice's first commit = task 1.1's commit whatever its prefix
+(`docs`/`test`/`chore` included, not the first `feat`), recorded in
+session 1's handoff, not the reviewing session's start; the `^` because `git diff a..b` excludes
 `a`; an explicit end SHA, never `..HEAD` — and make no commits until
 the verdict lands; after a BLOCK the fix commits get their own
 follow-up pass from the previous end SHA, chained until PASS;
@@ -142,6 +146,13 @@ Task list hygiene (the change's `tasks.md` or equivalent):
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.
+  The same holds for actions the harness will not let the agent run:
+  auto mode's classifier stops writes to shared resources (deploy env
+  vars, hosted config) and real writes through a remote shell into an
+  external or production system. Plan those as owner tasks from the
+  start, each with the exact command the agent prepares (field lesson:
+  both were planned as agent steps, blocked mid-session, and cost a
+  pause and a round of messages each).
 - Changes the gate checks as a pair (a snapshot field and its DB
   column + migration, a source and its generated artifact) are ONE
   task — a split leaves a tree that fails typecheck or verify.

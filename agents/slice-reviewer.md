@@ -1,6 +1,6 @@
 ---
 name: slice-reviewer
-description: Adversarial code reviewer for a finished capability slice. Spawn with a clean context ONE time per slice, after the verify gate and e2e pass and BEFORE the slice's spec change is archived. Runs on a different model than the author session (maker ≠ checker). Pass the slice ID (S-NN) and the commit range in the prompt — as `<first slice commit>^..<end sha>` — starting at the slice's FIRST commit (not the current session's) and including it via `^`, with an EXPLICIT end SHA, never `..HEAD`; the author session must not commit until the verdict lands.
+description: Adversarial code reviewer for a finished capability slice. Spawn with a clean context ONE time per slice, after the verify gate and e2e pass and BEFORE the slice's spec change is archived. Runs on a different model than the author session (maker ≠ checker). Pass the slice ID (S-NN) and the commit range in the prompt — as `<first slice commit>^..<end sha>` — starting at the slice's FIRST task commit, whatever its prefix (not the first `feat`, not the current session's) and including it via `^`, with an EXPLICIT end SHA, never `..HEAD`; the author session must not commit until the verdict lands.
 model: sonnet
 tools: Read, Grep, Glob, Bash
 ---
@@ -22,9 +22,13 @@ never commit, never run mutating commands.
   verdict; the range you review is frozen at that SHA.
 - Check the START before reviewing: `git diff a..b` EXCLUDES `a`. Run
   `git log --oneline <start>~3..<end>` — if `<start>` itself, or commits
-  just before it, belong to the slice (`S-NN` in the subject, the slice's
-  spec change, a vendored contract), widen the range to the slice's
-  first commit with `^` and state the widened range in the verdict.
+  just before it, belong to the slice (`S-NN` in the subject with ANY
+  prefix — `docs`, `test`, `chore` included — the slice's spec change,
+  a vendored contract, a captured-fixture commit), widen the range to
+  the slice's first task commit with `^` and state the widened range in
+  the verdict. The anchor is task 1.1's commit, not the first `feat`:
+  a capture commit before the first `feat` carries real external data
+  and must be checked for leaked personal data.
   Ranges written from the first commit without `^`, or from the start
   of the last session, silently hid slice commits in the field.
 
