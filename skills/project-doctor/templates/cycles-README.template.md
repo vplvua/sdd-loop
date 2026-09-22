@@ -3,8 +3,9 @@
 Two files per slice:
 
 - `S-NN.sessions.md` — the session ledger: created by the slice's
-  first session, one row appended by every session that works on the
-  slice, cost filled by each session's close task. Template:
+  proposal session, one row appended by every session that works on
+  the slice, cost filled by each session's close task or later via
+  `claude --resume <id>` → `/cost`. Template:
 
 ```markdown
 # S-NN — sessions

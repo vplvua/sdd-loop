@@ -109,6 +109,13 @@ runs, owner, review, closing, all in one context); a 12 h session with
   "review + closing" as separate sessions.
 - A question to the owner that may wait (overnight, an action on their
   side) ends the session: hand off instead of holding a large context.
+- A session whose work is done does NOT stay open for its `/cost` or
+  for an owner verdict: it closes with the ledger cell empty and names
+  its id in the handoff; the owner fills the cell later via
+  `claude --resume <id>` → `/cost` (field lesson: a session idled
+  2 h 19 min for one pasted line, outlived the cache TTL and became
+  the slice's most expensive one; another re-cached 147k tokens
+  waiting for a verdict).
 - The reviewer is spawned from a context that did NOT develop the
   slice — a fresh closing session qualifies; don't open an extra
   context just to spawn it.
@@ -125,8 +132,11 @@ unrelated sessions cannot blur the retro's metrics:
   `claude --resume` id); a resumed session already has its row. A
   session about something else writes nothing. Append with a shell
   `>>` (parallel sessions share the file) and commit the row with the
-  session's next commit. The first session creates the file from the
-  cycles README template.
+  session's next commit. The slice's first session is the PROPOSAL
+  session — it creates the file from the cycles README template and
+  writes the first row (field lesson: two slices in a row the ledger
+  was created by apply session 1, and the proposal — often on another
+  model — stayed unmeasured until a back-dated row).
 - Row: `| <full session id> | <repo> | <change · task group> | <model> |
   <started, local MM-DD HH:MM> | <cost> |`, compact, under
   `<!-- prettier-ignore -->`. Cost is empty while the session is open,
@@ -140,9 +150,11 @@ unrelated sessions cannot blur the retro's metrics:
 Task list hygiene (the change's `tasks.md` or equivalent):
 
 - Every session block ends with a close task — tick the boxes, write
-  the handoff, write the session's `/cost` into its ledger row — the
-  LAST block included, so the slice total is a sum, not an
-  after-the-fact reconstruction.
+  the handoff, write the session's `/cost` into its ledger row if the
+  owner pastes it right away (otherwise leave the cell empty and name
+  the session id in the handoff — never wait for it) — the LAST block
+  included, so the slice total is a sum, not an after-the-fact
+  reconstruction.
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.
@@ -153,6 +165,15 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   start, each with the exact command the agent prepares (field lesson:
   both were planned as agent steps, blocked mid-session, and cost a
   pause and a round of messages each).
+- An owner task is written in the OWNER's language and is
+  self-sufficient: where to go (which admin panel, which console),
+  what to click, and the exact text to paste — SQL or a command as a
+  copy-ready line, not a description of intent. A task on a device
+  carries its build: the file path, the commit it was built from and
+  the install command — built BEFORE the preparing session closes
+  (field lesson: "run an aggregate query" came back as "what is that,
+  what do I do?"; a device check came back as "where is the build?",
+  and the build was made after the session's `/cost`).
 - Changes the gate checks as a pair (a snapshot field and its DB
   column + migration, a source and its generated artifact) are ONE
   task — a split leaves a tree that fails typecheck or verify.

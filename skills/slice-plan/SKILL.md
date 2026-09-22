@@ -64,10 +64,16 @@ For each slice:
 ## Definition of Done (every slice)
 
 Throughout the slice: every session that works on it has a row in the
-session ledger `<cyclesDir>/S-NN.sessions.md` (appended at session
-start, cost filled by the session's close task — see the CLAUDE.md
-session-ledger rules); the retro needs every row's cost measured or
-marked `not measured: <reason>`.
+session ledger `<cyclesDir>/S-NN.sessions.md` (created by the PROPOSAL
+session, which writes the first row; appended at session start; cost
+filled by the session's close task or, later, by the owner's
+`claude --resume <id>` → `/cost` — a finished session never stays open
+waiting for it; see the CLAUDE.md session-ledger rules); the retro
+needs every row's cost measured or marked `not measured: <reason>`.
+Owner tasks in the change's task list are written in the owner's
+language and are self-sufficient — where, what to click, the exact
+line to paste; a device check names the build file, its commit and the
+install command.
 
 0. Multi-repo slices only: before implementation starts, every FR code
    of the consumer side is checked against the contract the producer
