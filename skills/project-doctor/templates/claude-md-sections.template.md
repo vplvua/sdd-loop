@@ -86,7 +86,10 @@ different model; freeze the range as `<first slice commit>^..<end SHA>`
 session 1's handoff, not the reviewing session's start; the `^` because `git diff a..b` excludes
 `a`; an explicit end SHA, never `..HEAD` — and make no commits until
 the verdict lands; after a BLOCK the fix commits get their own
-follow-up pass from the previous end SHA, chained until PASS;
+follow-up pass from the previous end SHA, chained until PASS; a fix
+is proven red-before on the exact line the finding named and sized
+from the inventory the finding is one item of, not from its words —
+each pass that finds a flaw in the previous fix is paid twice;
 critical/high findings block until fixed; a reviewer's suggested fix is
 a hypothesis — validate it with the slice's tests before adopting),
 archive the spec change, update `{{CURRENT_STATE_PATH}}` and
@@ -169,11 +172,14 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   self-sufficient: where to go (which admin panel, which console),
   what to click, and the exact text to paste — SQL or a command as a
   copy-ready line, not a description of intent. A task on a device
-  carries its build: the file path, the commit it was built from and
-  the install command — built BEFORE the preparing session closes
-  (field lesson: "run an aggregate query" came back as "what is that,
-  what do I do?"; a device check came back as "where is the build?",
-  and the build was made after the session's `/cost`).
+  carries its build: the ABSOLUTE file path pasted from `ls -la <file>`
+  run after the build (the line proves the file exists — a name does
+  not), the commit it was built from and the install command — built
+  BEFORE the preparing session closes (field lesson: "run an aggregate
+  query" came back as "what is that, what do I do?"; "where is the
+  build?" came back three slices running — once the build was made
+  after the session's `/cost`, once the named APK had never been
+  built, once the path was relative inside the install command).
 - Changes the gate checks as a pair (a snapshot field and its DB
   column + migration, a source and its generated artifact) are ONE
   task — a split leaves a tree that fails typecheck or verify.

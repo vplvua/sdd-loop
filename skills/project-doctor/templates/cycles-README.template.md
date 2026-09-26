@@ -26,7 +26,7 @@ Two files per slice:
 
 - Time: <calendar> / <net human, estimate>
 - Tokens/cost: <exact /cost figure if given; otherwise estimate, marked>
-- Iterations: <verify-gate blocks, re-work loops>
+- Iterations: <verify-gate blocks, re-work loops, flaky tests × contexts seen>
 - Defects leaked from earlier slices: <n>
 - Spec adherence: <deviations, unescalated decisions>
 

@@ -76,7 +76,14 @@ Skip this section when the retro runs inside the slice session.
    gate blocked a commit and why.
 3. **Tooling**: static-analysis false positives (needed config edits?),
    hook failures or annoyances, spec-validation errors, flaky tests,
-   build-cache issues.
+   build-cache issues. Count each flaky test's appearances across ALL
+   the slice's contexts — gate blocks in the transcripts, reviewer
+   runs, "not reproduced" notes — and name the test with its count in
+   the metrics; a test flaky in two or more contexts becomes a proposal
+   for its own task, since a per-session "seen twice, fix it" rule
+   never fires when every session sees it once (field lesson: one test
+   stayed "recorded, not fixed" through four sessions and a proposal
+   commit, each seeing it for the first time).
 4. **Documentation and settings vs reality**: which statements in the
    PRD / capability plan / CLAUDE.md / skills / SDD rules turned out
    inaccurate, outdated, or missing; where the configured process
@@ -108,7 +115,8 @@ Record in the artifact, marking estimates as estimates:
   undercount) — and must be marked as such. Also record the cost-vs-
   context distribution when available (share of spend past 150k) — it
   drives the session-hygiene guidance.
-- **Iterations**: verify-gate blocks, re-work loops until DoD.
+- **Iterations**: verify-gate blocks, re-work loops until DoD; flaky
+  tests by name with the number of contexts each appeared in.
 - **Defects**: bugs found in THIS slice that belong to previous slices.
 - **Spec adherence**: deviations from FR/NFR/ADR; decisions the agent
   took without escalation.

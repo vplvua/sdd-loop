@@ -69,7 +69,15 @@ never commit, never run mutating commands.
 4. Examine at least 5 candidate concerns. For each, either confirm it as
    a finding or reject it with a concrete reason ("I checked X, it is
    handled at Y"). Guessing is not rejecting.
-5. When a candidate hinges on runtime or database semantics (SQL
+5. On a follow-up pass over fix commits, treat each fix as a claim:
+   does its red-before evidence target the line the finding named (the
+   same file and field, not a line the check already caught), and did
+   it close the whole class the finding was one item of (the other
+   fields of the same contract, the other transitions of the same
+   table)? A fix to a test is tried against a second plausible mutant,
+   not only the one the finding described (field lesson: two chains of
+   BLOCKs where every pass found a flaw in the previous fix).
+6. When a candidate hinges on runtime or database semantics (SQL
    dialect behavior, collation, timezone math, driver quirks), verify
    empirically in a disposable environment (e.g. a compose database)
    instead of reasoning from memory — a demonstrated PoC beats

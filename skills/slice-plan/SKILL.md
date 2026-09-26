@@ -72,8 +72,9 @@ waiting for it; see the CLAUDE.md session-ledger rules); the retro
 needs every row's cost measured or marked `not measured: <reason>`.
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
-line to paste; a device check names the build file, its commit and the
-install command.
+line to paste; a device check names the build file by its ABSOLUTE
+path pasted from `ls -la <file>` run after the build (proof it exists,
+not a name), its commit and the install command.
 
 0. Multi-repo slices only: before implementation starts, every FR code
    of the consumer side is checked against the contract the producer
@@ -132,6 +133,18 @@ install command.
    bugs; chain passes until `PASS`, with the union of ranges covering
    every commit that ships. For slices spanning multiple repositories,
    every involved repository's frozen range is reviewed.
+   A fix for a finding is proven like the original work: red on the
+   before state on the EXACT line the finding named (same file, same
+   field — not an invented line the check already caught), and its
+   scope is drawn from the inventory the finding is one item of (every
+   money field of the contract, every transition of the state table),
+   collected in one command and closed in one commit — not from the
+   finding's words, one word per pass. A fix to a test is checked
+   against two mutants: the one the finding described and one that
+   survives a narrower fix (field lesson: one slice spent three extra
+   reviewer passes, another two — each pass a flaw in the previous
+   fix: a plausible mutant nobody ran, a planted violation on the wrong
+   field, a guard list grown one word per finding).
    `critical`/`high` findings fixed (verify re-run); `medium`/`low` at
    the author's discretion, dispositions logged in the retro.
 7. Spec change archived per the project's SDD tooling (e.g. OpenSpec:
