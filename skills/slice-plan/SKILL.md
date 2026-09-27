@@ -72,7 +72,11 @@ waiting for it; see the CLAUDE.md session-ledger rules); the retro
 needs every row's cost measured or marked `not measured: <reason>`.
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
-line to paste; a device check names the build file by its ABSOLUTE
+line to paste; the handoff names such a task by file and number
+(`<change>/tasks.md`, task 1.1) and asks for it BEFORE the next
+session opens, so that session reads the answer instead of waiting
+(remote-shell reads into staging/production are owner tasks too —
+the classifier blocks them like writes); a device check names the build file by its ABSOLUTE
 path pasted from `ls -la <file>` run after the build (proof it exists,
 not a name), its commit and the install command.
 
@@ -121,7 +125,11 @@ not a name), its commit and the install command.
    a `test`/`chore` capture of real responses counts, the first `feat`
    is NOT the anchor — recorded in session 1's handoff; never the start
    of the session running the review, and
-   the `^` is mandatory: `git diff a..b` excludes `a` (field lesson:
+   the `^` is mandatory: `git diff a..b` excludes `a`. The end is the
+   trunk HEAD as the reviewing session found it; that session's own
+   ledger row / handoff commit is docs-only, lands AFTER the end SHA
+   and stays outside the range (its SHA exists before the freeze line
+   is written) — no code commits until the verdict lands (field lesson:
    three ranges in one slice series hid session 1, then the first
    commit itself; later both halves of a two-repo slice anchored on the
    first `feat` and left out the task-1.1 commits — one of them the

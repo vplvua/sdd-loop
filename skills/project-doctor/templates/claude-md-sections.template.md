@@ -84,8 +84,10 @@ different model; freeze the range as `<first slice commit>^..<end SHA>`
 — the slice's first commit = task 1.1's commit whatever its prefix
 (`docs`/`test`/`chore` included, not the first `feat`), recorded in
 session 1's handoff, not the reviewing session's start; the `^` because `git diff a..b` excludes
-`a`; an explicit end SHA, never `..HEAD` — and make no commits until
-the verdict lands; after a BLOCK the fix commits get their own
+`a`; an explicit end SHA, never `..HEAD` — the trunk HEAD before the
+reviewing session opened; that session's ledger/handoff commit is
+docs-only and lands after the end SHA, outside the range; no code
+commits until the verdict lands; after a BLOCK the fix commits get their own
 follow-up pass from the previous end SHA, chained until PASS; a fix
 is proven red-before on the exact line the finding named and sized
 from the inventory the finding is one item of, not from its words —
@@ -163,11 +165,20 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   agent's task: the agent cannot tick it, and archive does not wait.
   The same holds for actions the harness will not let the agent run:
   auto mode's classifier stops writes to shared resources (deploy env
-  vars, hosted config) and real writes through a remote shell into an
-  external or production system. Plan those as owner tasks from the
-  start, each with the exact command the agent prepares (field lesson:
-  both were planned as agent steps, blocked mid-session, and cost a
-  pause and a round of messages each).
+  vars, hosted config) and ANY command through a remote shell into an
+  external or production system — reads and probes included, not only
+  writes. Plan those as owner tasks from the start, each with the
+  exact command the agent prepares, and hand them off from the
+  PREVIOUS session with the ask to run them BEFORE the next session
+  opens; that session starts by reading the pasted output, not by
+  waiting for it (field lesson: both were planned as agent steps,
+  blocked mid-session, and cost a pause and a round of messages each;
+  later a staging read every session re-discovered as blocked, and a
+  session that idled 59 min inside its context for commands ready in
+  the previous handoff). The handoff and the current-state doc name
+  an owner task by FILE and number (`<change>/tasks.md`, task 1.1),
+  never by number alone (field lesson: "where do I read these
+  steps?" was the first message of a session).
 - An owner task is written in the OWNER's language and is
   self-sufficient: where to go (which admin panel, which console),
   what to click, and the exact text to paste — SQL or a command as a
