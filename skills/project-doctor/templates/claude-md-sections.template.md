@@ -71,6 +71,18 @@ More generally, a proof counts only if it could have been red:
   platform, environment) read from the run itself, not from the
   runner's arguments or output labels (field case: an "ios" suite drove
   the Android emulator end to end and stayed green).
+- **One row per named value.** A spec sentence that enumerates values
+  of one state ("`report_unavailable`, `404` and `409`") gets a test
+  table with a row for EACH named value, through the screen; a row
+  green because the value fell into the default branch is not proof
+  of that value (field case: two of three statuses had rows, the
+  third reached the wrong banner and the second was right by
+  accident).
+- **Hold the transient.** A test that reads a transient state
+  ("pending", a spinner) holds the request that would end it — a read
+  over an unheld response is a race, even while green (field case:
+  the rule lived in an old fix and its commit message, and a new test
+  repeated the old shape).
 
 ## Slice workflow (SDD)
 
@@ -145,7 +157,11 @@ unrelated sessions cannot blur the retro's metrics:
 - Row: `| <full session id> | <repo> | <change · task group> | <model> |
   <started, local MM-DD HH:MM> | <cost> |`, compact, under
   `<!-- prettier-ignore -->`. Cost is empty while the session is open,
-  then the measured `/cost` total, or `not measured: <reason>`. A model
+  then the measured `/cost` total, or `not measured: <reason>`. The
+  cost is written by REPLACING the empty last cell, never by appending
+  one; after writing, `grep -c '||' S-NN.sessions.md` prints 0 (field
+  lesson: two rows in one slice gained a seventh cell, the table
+  rendered shifted and the sum script read the wrong column). A model
   switch mid-session is recorded in the model cell (`A → B`).
 - At session start, read the ledger with the handoff: a CLOSED session
   whose cost is still empty → ask the owner for

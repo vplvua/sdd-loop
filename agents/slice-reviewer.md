@@ -65,7 +65,16 @@ never commit, never run mutating commands.
      compile error is the assertion itself.
    - **Test adequacy**: do the tests actually assert the acceptance
      scenarios? Would they fail if the behavior regressed? Flag
-     assertion-free or tautological tests.
+     assertion-free or tautological tests. A spec sentence that
+     enumerates values of one state (status codes, error kinds,
+     transitions) needs a test row for EACH named value, through the
+     user-facing layer; a value that is green only because it falls
+     into the default branch has no proof of its own — try it against
+     the mutant that routes it elsewhere (field lesson: "503, 404 and
+     409" was covered by 503 and 404; 409 went to the wrong banner and
+     404 was right by accident). A test that reads a transient state
+     ("pending", loading) must hold the request that would end it;
+     a read over an unheld response is a race even while green.
    - **Normative prose in the range**: read every changed spec delta,
      requirement and task line as rendered Markdown, not as a diff of
      lines. A formatter wrapping a code span so that a line starts
