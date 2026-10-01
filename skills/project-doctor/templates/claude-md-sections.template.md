@@ -77,7 +77,23 @@ More generally, a proof counts only if it could have been red:
   green because the value fell into the default branch is not proof
   of that value (field case: two of three statuses had rows, the
   third reached the wrong banner and the second was right by
-  accident).
+  accident). A table in the code counts the same way: every code a
+  classifier (code → effect) names gets its own test through the
+  screen, and its line in the spec — what an effect means is decided
+  by what the screen does after it (field case: `409 suspended` had
+  an effect row and a comment promising a banner; cached data beat
+  the error and the banner never showed).
+- **A zero needs a control.** A filter expected to print nothing
+  (a log scan for personal data, a search for a removed phrase) first
+  counts 1 on a planted control line fed through the same command
+  (field case: `grep -P` does not exist on macOS, and every filter
+  printed 0 — including those that had something to find; use
+  `perl -ne` or `grep -E`).
+- **Not from the cache.** A run whose result depends on something the
+  task runner does not hash — an environment variable (`TZ`, a feature
+  flag) — goes past its cache (`--skip-nx-cache`, `turbo --force`),
+  and the record quotes the line that says so (field case: a timezone
+  mutant stayed "4 passed", replayed from the cache).
 - **Hold the transient.** A test that reads a transient state
   ("pending", a spinner) holds the request that would end it — a read
   over an unheld response is a race, even while green (field case:
@@ -109,6 +125,18 @@ a hypothesis — validate it with the slice's tests before adopting),
 archive the spec change, update `{{CURRENT_STATE_PATH}}` and
 `{{TRACEABILITY_PATH}}`, and close with `/sdd-loop:slice-retro` →
 `{{CYCLES_DIR}}/S-NN.md`.
+
+Proposal: a decision about user-visible behavior (what a screen shows,
+when it refreshes, how a control looks) that no normative source
+states — PRD, design canvas, journal — is not taken from parity with
+an existing product or from an assumption. Ask the owner in the
+proposal session, before the design is written: one short list, each
+item with ready options and a recommendation; the answers become
+journal entries. In a multi-repo slice the list is asked in the
+slice's FIRST proposal, before the producer's contract is fixed (field
+lesson: "day, not time" and "no polling" came from parity with the old
+app; the owner's first look reversed both after the device session,
+and the second loop cost about 80% of the first).
 
 Session hygiene: run one session per task group, not per slice, and
 start a FRESH session at a boundary instead of compacting a long one —

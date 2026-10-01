@@ -93,7 +93,19 @@ not a name), its commit and the install command.
    (field lesson: a half interrupted at its first question was recorded
    as "proposed in both repos" and the claim lived for five sessions).
 1. Spec artifacts (proposal, design, tasks, spec deltas) filled and
-   validated; all task checkboxes `[x]`.
+   validated; all task checkboxes `[x]`. A decision about user-visible
+   behavior (what a screen shows, when it refreshes, how a control
+   looks) that no normative source states — PRD, design canvas,
+   journal — is not taken by the proposal from parity with an existing
+   product or from an assumption: it is ASKED to the owner in the
+   proposal session, before the design is written — one short list,
+   each item with ready options and the proposal's recommendation; the
+   answers become journal entries. In a multi-repo slice the list is
+   asked in the slice's FIRST proposal, before the producer's contract
+   is fixed (field lesson: a chat slice took "day, not time" and "no
+   polling" from parity with the old app; the owner's first look
+   reversed both after the device session, and the second loop — a new
+   producer change and nine contexts — cost about 80% of the first).
 2. The project's `verify` script passes (blocking gate).
 3. Smoke test against a real backing store: create / update / delete
    the slice's data and check invariants. For external gateway

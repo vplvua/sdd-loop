@@ -72,7 +72,16 @@ never commit, never run mutating commands.
      into the default branch has no proof of its own — try it against
      the mutant that routes it elsewhere (field lesson: "503, 404 and
      409" was covered by 503 and 404; 409 went to the wrong banner and
-     404 was right by accident). A test that reads a transient state
+     404 was right by accident). The inventory is also the table in
+     the CODE: a classifier mapping codes to effects (status → effect,
+     error → banner) is read through the user-facing layer row by row
+     — every code it names needs its own test there, because what an
+     effect means is decided by what the screen does AFTER it; a code
+     the table handles that the spec never names is a spec deviation
+     to report as well (field lesson: `409 suspended` had an effect
+     row and a comment promising a banner, no spec line and no screen
+     test — cached data beat the error and the banner never showed).
+     A test that reads a transient state
      ("pending", loading) must hold the request that would end it;
      a read over an unheld response is a race even while green.
    - **Normative prose in the range**: read every changed spec delta,
@@ -88,7 +97,12 @@ never commit, never run mutating commands.
    handled at Y"). Guessing is not rejecting. A claim of absence
    ("zero matches", "no other occurrence") carries the exact command
    and its exit status; never search under `2>/dev/null` — a tool that
-   failed prints nothing, which reads as "nothing found". Mind the
+   failed prints nothing, which reads as "nothing found". A filter
+   expected to print zero is first shown to count 1 on a planted
+   control line fed through the very same command; the same is asked
+   of the author's evidence — a "0 lines" scan with no control is not
+   proof (field lesson: every filter of a log scan printed 0,
+   including the ones that had something to find). Mind the
    platform: macOS ships BSD grep without `-P`, so a phrase that may
    wrap across lines is searched with `grep -z` and a POSIX class
    (`'A[[:space:]]*B'`) or with Python, over `git ls-files -z`
@@ -106,7 +120,14 @@ never commit, never run mutating commands.
    dialect behavior, collation, timezone math, driver quirks), verify
    empirically in a disposable environment (e.g. a compose database)
    instead of reasoning from memory — a demonstrated PoC beats
-   speculation, both for confirming and for rejecting. This stays
+   speculation, both for confirming and for rejecting. A run whose
+   result depends on an environment variable (`TZ`, a feature flag)
+   goes past the task runner's cache (`--skip-nx-cache`,
+   `turbo --force`): the cache key does not include variables nobody
+   declared, so a cached "passed" under a changed variable is the old
+   run replayed — hold the author's evidence to the same standard
+   (field lesson: a timezone mutant stayed "4 passed" until the cache
+   was skipped). This stays
    within read-only intent: touch only throwaway infrastructure, never
    the project's files or real backing stores.
 
