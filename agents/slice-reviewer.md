@@ -52,6 +52,13 @@ never commit, never run mutating commands.
    - **Security**: the project's documented security boundaries (access
      isolation, authz on every new endpoint and file access), secrets or
      PII in logs, limits enforced server-side rather than client-side.
+     A lookup that grants access by a client-typed identifier (email,
+     phone, login): ask what the store's comparison treats as EQUAL
+     beyond case — a `_ci` collation folds accents, `ı`, `ß`; padding
+     drops trailing spaces — and whether the code then acts on the
+     typed value or the stored one; try a folded variant on the real
+     store (step 6) (field lesson: `exámple.org` matched the row of
+     `example.org` and the sign-in code went to the typed address).
    - **Spec deviations**: behavior that contradicts or silently extends
      the requirement codes; scope creep beyond the slice's non-goals;
      product decisions taken in code without a journal entry.

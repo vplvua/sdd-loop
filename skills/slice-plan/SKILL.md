@@ -76,7 +76,11 @@ line to paste; the handoff names such a task by file and number
 (`<change>/tasks.md`, task 1.1) and asks for it BEFORE the next
 session opens, so that session reads the answer instead of waiting
 (remote-shell reads into staging/production are owner tasks too —
-the classifier blocks them like writes); a device check names the build file by its ABSOLUTE
+the classifier blocks them like writes); an owner task that needs a
+session's own product (a live deploy, a command it builds) sits at the
+boundary AFTER that session, never inside it, and the handoff sends the
+answer to the next session's first message, not to the closed one —
+a reply there re-reads its whole context; a device check names the build file by its ABSOLUTE
 path pasted from `ls -la <file>` run after the build (proof it exists,
 not a name), its commit and the install command.
 
@@ -112,6 +116,15 @@ not a name), its commit and the install command.
    integrations, response fixtures are written from a CAPTURED REAL
    call, not from documentation — until the first real call succeeds,
    the integration counts as unverified regardless of test coverage.
+   A lookup that grants access by an identifier the client types
+   (email, phone, login) is tested on the real store with values its
+   comparison FOLDS into a stored one — accents, `ı`, `ß`, trailing
+   spaces under a `_ci` collation, not only case: the store's `=`
+   narrows candidates, the code compares the stored value with the
+   typed one exactly after normalization (field lesson: the collation
+   was in the inventory from session 1, seven sessions tested case and
+   spaces, and `exámple.org` opened the session of `example.org` until
+   the reviewer tried it).
 4. E2e scenarios for the slice's critical paths pass, derived from the
    acceptance scenarios. Budget rate-limited external test resources
    (OTP quotas, test accounts, sandbox credits) for retries and

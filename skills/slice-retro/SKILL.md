@@ -61,7 +61,12 @@ Skip this section when the retro runs inside the slice session.
 - **Cost**: a session with no pasted `/cost` is priced from the
   transcript only as a floor, and not at all for models without known
   rates — ask the user for `claude --resume <id>` → `/cost`, naming the
-  exact session id.
+  exact session id, and for the block to be pasted HERE together with
+  that id. A `/cost` block carries no session id: write it into the
+  row whose id came with it, never by order or by an ordinal ("the
+  third session" — the ledger also counts proposal and owner-probe
+  rows); two blocks or no id → ask. Check the block's model and wall
+  duration against the row before writing.
 - **Privacy**: the retro artifact quotes owner turns sparingly (the
   words that carry the lesson) and never pastes raw transcript content.
 

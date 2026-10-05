@@ -194,7 +194,17 @@ unrelated sessions cannot blur the retro's metrics:
 - At session start, read the ledger with the handoff: a CLOSED session
   whose cost is still empty → ask the owner for
   `claude --resume <id>` → `/cost`, naming the id (a session still
-  running in parallel is not a gap — ask if unsure).
+  running in parallel is not a gap — ask if unsure). The owner pastes
+  the block into the session that ASKED, together with that id — not
+  into the resumed session, where the paste wakes a finished context
+  to write one cell. A `/cost` block carries no session id: it goes
+  into the row whose id came with it, never by order or by "the third
+  session" (the ledger also counts proposal and owner-probe rows);
+  two blocks or no id → ask. Check before writing: the block's model
+  is the row's model, its wall duration fits the row's start (field
+  lesson: a closed session was woken 75 min later by its own pasted
+  `/cost`; in another, two blocks arrived in one context and the
+  figure was matched to its row by the owner's ordinal).
 
 Task list hygiene (the change's `tasks.md` or equivalent):
 
@@ -223,6 +233,20 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   an owner task by FILE and number (`<change>/tasks.md`, task 1.1),
   never by number alone (field lesson: "where do I read these
   steps?" was the first message of a session).
+- An owner task that needs something a session produces (a deploy
+  that must be live, a command that session builds, a variable it
+  introduces) is a session BOUNDARY: it sits after that session's
+  close task — never "by the end of session N" or between its tasks —
+  and the work that needs the answer opens the next block. The
+  handoff says WHERE the answer goes: into the first message of the
+  NEXT session, never "into the chat" — a reply typed into the closed
+  session wakes its whole context, past the cache TTL at the uncached
+  price. An owner action discovered mid-session goes the same way:
+  write the task, hand off, close (field lesson: three sessions of
+  one slice took the owner's answers 33–61 min after handing the task
+  off and worked on in the old context; the plan had timed a variable
+  write "by the end of session 1", and the handoff said "paste into
+  the chat").
 - An owner task is written in the OWNER's language and is
   self-sufficient: where to go (which admin panel, which console),
   what to click, and the exact text to paste — SQL or a command as a
