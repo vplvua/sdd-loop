@@ -100,6 +100,46 @@ doctor's rule-by-rule reconciliation, keyed by `templatesVersion` in
 — the doctor proposes merges, never
 reverts.
 
+### Field pattern: a second SDD project on a long-lived branch
+
+Not scaffolded by the doctor yet — recorded from moeosbb-platform
+(ADR-P-0023), where the board admin panel is its own SDD project in a
+worktree (`../moeosbb-admin`, branch `admin`) sharing code, specs and
+ADRs with `main`:
+
+- **Branch-only layer.** The SDD paths that belong to one project
+  (`.sdd/config.json`, `CLAUDE.md`, `openspec/config.yaml`, its docs
+  dir) carry a git attribute (`sdd-branch-only`) in a `.gitattributes`
+  kept identical on both branches. A plain `git merge` clobbers them
+  silently — a merge driver never runs for a path only one side
+  changed or added — so every merge goes through a script that merges
+  with `--no-commit`, resets each attributed path to the target
+  branch's state (restore, or drop what only the source has), and
+  stops before the commit so the verify hook gates the merged tree.
+- **Direction and timing.** `main → branch` before every proposal, before
+  taking a shared number (ADR), and before `branch → main`;
+  `branch → main` after every archived slice, run from a session in the
+  main checkout — the closing session hands it over, never runs it
+  across worktrees (the verify hook gates `CLAUDE_PROJECT_DIR`, i.e.
+  the wrong tree).
+- **The sync script must survive being merged.** bash reads a script as
+  it runs; a merge that rewrites the script mid-run executes the rest
+  from the new file. Wrap the body in a function called on the last
+  line with `exit` (field lesson: the first sync after a fix to the
+  script ran half old, half new and split a path with spaces). It also
+  checks that a merge actually started (`MERGE_HEAD`) instead of
+  swallowing the failure.
+- **One gate base for both branches.** A diff-scoped gate (fallow
+  audit) measures from the merge-base with the branch's upstream — on
+  the side branch every pushed commit becomes the base, so a duplicate
+  split across commits passes there and blocks the hand-off on main.
+  Pin the base to the merge-base with `origin/main` on both branches.
+- **Separate local infra per worktree** (compose project name, ports):
+  a `down -v` in one worktree must not wipe the other's database.
+
+Open: whether the doctor should scaffold this (attribute file, sync
+script, CLAUDE.md section) when a project declares a second SDD layer.
+
 ## Resolved questions
 
 - OQ-1 (plugin layout): confirmed from official docs — manifest in
