@@ -38,7 +38,7 @@ echo "sdd-loop verify gate: git commit detected — running 'npm run verify'" >&
 if ! out=$(cd "$proj" && npm run verify 2>&1); then
   printf '%s\n' "$out" | tail -60 >&2
   echo "" >&2
-  echo "BLOCKED: 'npm run verify' failed — fix the issues above, then retry the commit. Never chain fixes with the commit in one command: the gate verifies the tree BEFORE the whole command runs." >&2
+  echo "BLOCKED: 'npm run verify' failed — fix the issues above, then retry the commit. NOTHING in this command ran: the gate verifies the tree BEFORE the whole command, so every step chained before 'git commit' (fixes, formatters, edits, scripts — the work itself) was skipped too. Re-run those steps as separate commands, check them, then commit alone." >&2
   exit 2
 fi
 

@@ -116,6 +116,16 @@ not a name), its commit and the install command.
    integrations, response fixtures are written from a CAPTURED REAL
    call, not from documentation — until the first real call succeeds,
    the integration counts as unverified regardless of test coverage.
+   The same holds for the external system's SHAPE (column widths,
+   types, enums, nullability) in an inventory, a test bound or a
+   question to the owner: it is read from a probe of the real system
+   (or the ADR that recorded one), never from the local stand-in (a
+   compose seed DDL, a mock) — a stand-in drifts, and the question
+   names which source it read (field lesson: a width inventory read
+   the compose DDL, 255 where the real legacy has 50; the owner was
+   asked under the false premise, the reviewer read the same file,
+   and a `high` finding turned out to be a defect of the dev stand
+   only).
    A lookup that grants access by an identifier the client types
    (email, phone, login) is tested on the real store with values its
    comparison FOLDS into a stored one — accents, `ı`, `ß`, trailing
@@ -174,7 +184,13 @@ not a name), its commit and the install command.
    collected in one command and closed in one commit — not from the
    finding's words, one word per pass. A fix to a test is checked
    against two mutants: the one the finding described and one that
-   survives a narrower fix (field lesson: one slice spent three extra
+   survives a narrower fix. Every mutant runs under a time bound
+   (`timeout N …`; macOS has none — `perl -e 'alarm N; exec @ARGV' …`):
+   a mutant that drops a lock or a re-check can HANG instead of
+   failing, and a hang past the bound counts as red (field lesson: a
+   race-test mutant left jest waiting on a lock for 31 min until the
+   owner asked whether anything was still running). (Field lesson on
+   the fixes: one slice spent three extra
    reviewer passes, another two — each pass a flaw in the previous
    fix: a plausible mutant nobody ran, a planted violation on the wrong
    field, a guard list grown one word per finding).

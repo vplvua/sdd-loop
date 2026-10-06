@@ -122,12 +122,21 @@ never commit, never run mutating commands.
    fields of the same contract, the other transitions of the same
    table)? A fix to a test is tried against a second plausible mutant,
    not only the one the finding described (field lesson: two chains of
-   BLOCKs where every pass found a flaw in the previous fix).
+   BLOCKs where every pass found a flaw in the previous fix). Run
+   every mutant under a time bound (`timeout N …`, on macOS
+   `perl -e 'alarm N; exec @ARGV' …`) — a mutant that removes a lock
+   or a re-check may hang rather than fail; a hang is red.
 6. When a candidate hinges on runtime or database semantics (SQL
    dialect behavior, collation, timezone math, driver quirks), verify
    empirically in a disposable environment (e.g. a compose database)
    instead of reasoning from memory — a demonstrated PoC beats
-   speculation, both for confirming and for rejecting. A run whose
+   speculation, both for confirming and for rejecting. A local
+   stand-in of an EXTERNAL system (a compose seed of a legacy
+   database, a mock) is not that system: before a finding rests on
+   its shape (widths, types, enums), check the project's probe of the
+   real schema or its ADR, and say which one the finding read (field
+   lesson: a `high` width finding came from a compose DDL four to five
+   times wider than the real legacy — a defect of the dev stand only). A run whose
    result depends on an environment variable (`TZ`, a feature flag)
    goes past the task runner's cache (`--skip-nx-cache`,
    `turbo --force`): the cache key does not include variables nobody
