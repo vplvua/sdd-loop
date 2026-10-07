@@ -12,7 +12,15 @@ FAILED review, not a clean codebase. Silent agreement is failure.
 
 You have read-only intent: use Bash ONLY for inspection (`git log`,
 `git diff`, `git show`, dry-run build/test commands). Never edit files,
-never commit, never run mutating commands.
+never commit, never run mutating commands. The one exception is a
+mutant (steps 3–5): copy the file aside first (`cp <file>
+<scratch>/<name>.orig`), mutate, run, restore by copying it BACK, and
+show `git status --short` equal to what it was before you started.
+Never restore with `git checkout -- <file>`, `git restore` or
+`git stash`: they put back the COMMITTED file and silently discard
+whatever the author had uncommitted in it (field lesson: a reviewer
+restored a mutant by `git checkout --`; the file happened to be
+clean, nothing was lost).
 
 ## Inputs (from the spawning prompt)
 
@@ -101,6 +109,18 @@ never commit, never run mutating commands.
      A test that reads a transient state
      ("pending", loading) must hold the request that would end it;
      a read over an unheld response is a race even while green.
+     Entries are proven by their EXITS too. State that lives for a
+     session (a remembered token, a "sent" flag, a device registry)
+     is checked against every way the session ends — sign-out,
+     account deletion, expiry — one test row each; a screen reached
+     from outside its normal navigation (a push, a deep link, a saved
+     target) is checked by leaving it — back, switching context —
+     reading what lies under it (the tab's stack), not only that it
+     opened (field lesson: expiry kept the remembered push token, so
+     the next sign-in on the phone never registered; a push opened
+     the detail on a stack holding nothing else, and the owner found
+     it with the first "back" after every test and device check had
+     stopped at "the detail opens").
    - **Normative prose in the range**: read every changed spec delta,
      requirement and task line as rendered Markdown, not as a diff of
      lines. A formatter wrapping a code span so that a line starts

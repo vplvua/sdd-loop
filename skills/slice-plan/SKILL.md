@@ -150,12 +150,24 @@ not a name), its commit and the install command.
    their intersection (field lesson: an interrupted job held its
    meeting's slot forever — recovery ran only on a read by an id that
    lived in the lost tab; only the reviewer found it, at the cost of a
-   delta pass). Budget rate-limited external test resources
+   delta pass). The same for exits: session-lived state gets a row
+   for every way the session ends (sign-out, deletion, expiry), and a
+   screen a deep link or a push opens is proven by leaving it too —
+   back, a context switch — reading the stack under it; an acceptance
+   scenario that ends at "the screen opens" stops the proof one
+   gesture short (field lesson: tests, the device run and the owner's
+   look all stopped at "tap → detail"; the owner's next "back" found
+   the detail with nothing under it). Budget rate-limited external test resources
    (OTP quotas, test accounts, sandbox credits) for retries and
    per-platform runs, not for one ideal pass — and keep a spare.
 5. Launch-and-look check: run the app, walk the slice's happy path
    against the real integrations, confirm it works; note the check in
-   the current-state doc. Triage every owner remark from the check:
+   the current-state doc. An owner look that covers several checks
+   gets a report line with one slot PER check (`icon: <PASS | remark>`,
+   `toggles: …`), never one bare `<PASS | remark>` — a single slot
+   comes back "PASS" about what the owner happened to look at (field
+   lesson: a four-point look returned PASS naming two; the icon and
+   the five toggles went unreported). Triage every owner remark from the check:
    a DEFECT against the slice's normative sources (spec, design
    canvas, PRD) is fixed inside the slice; a NEW REQUIREMENT (the
    sources don't say it, or say otherwise) becomes a journal entry and
