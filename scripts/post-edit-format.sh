@@ -31,6 +31,17 @@ find_root() {
 if root=$(find_root "$f" prettier); then
   (cd "$root" && ./node_modules/.bin/prettier --write --ignore-unknown \
     --log-level warn "$f" >/dev/null 2>&1)
+  # prettier is not idempotent on some input — in markdown, an inline
+  # code span wrapped across lines is dedented 2 columns per pass, so
+  # the file one --write produced still fails the gate's --check (field
+  # lesson: four of one slice's six gate blocks, each found only at
+  # commit). Say so now, while the edit is fresh.
+  if ! (cd "$root" && ./node_modules/.bin/prettier --check --ignore-unknown \
+    --log-level silent "$f" >/dev/null 2>&1); then
+    printf '%s\n' "sdd-loop: prettier is not stable on $f — a second pass would change it again, and the commit gate will block." \
+      "In markdown this is almost always an inline code span (\`...\`) wrapped across a line break: put the span on one line (a long path or command goes on its own line or in a fenced block), then re-run \`prettier --check\` on the file." >&2
+    exit 2
+  fi
 fi
 
 case "$f" in

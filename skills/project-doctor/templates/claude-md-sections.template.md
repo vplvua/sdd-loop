@@ -209,11 +209,13 @@ unrelated sessions cannot blur the retro's metrics:
 Task list hygiene (the change's `tasks.md` or equivalent):
 
 - Every session block ends with a close task — tick the boxes, write
-  the handoff, write the session's `/cost` into its ledger row if the
-  owner pastes it right away (otherwise leave the cell empty and name
-  the session id in the handoff — never wait for it) — the LAST block
-  included, so the slice total is a sum, not an after-the-fact
-  reconstruction.
+  the handoff, leave the session's ledger cost cell EMPTY and name the
+  session id in the handoff — the LAST block included, so the slice
+  total is a sum, not an after-the-fact reconstruction. The task line
+  itself says "cost cell left empty, id in the handoff", never
+  "Close: `/cost`": a session follows its task line over this file
+  (field lesson: with "Close: `/cost`" in every block, seven sessions
+  of eight waited 13–29 min each for the paste).
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.

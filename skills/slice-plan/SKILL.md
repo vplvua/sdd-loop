@@ -66,9 +66,15 @@ For each slice:
 Throughout the slice: every session that works on it has a row in the
 session ledger `<cyclesDir>/S-NN.sessions.md` (created by the PROPOSAL
 session, which writes the first row; appended at session start; cost
-filled by the session's close task or, later, by the owner's
-`claude --resume <id>` → `/cost` — a finished session never stays open
-waiting for it; see the CLAUDE.md session-ledger rules); the retro
+filled by the owner's `claude --resume <id>` → `/cost` after the
+session closed — a finished session never stays open waiting for it;
+see the CLAUDE.md session-ledger rules). The close task in `tasks.md`
+SAYS so in its own words — "ledger cost cell left empty, session id
+in the handoff" — never "Close: `/cost`, tick …": a session executes
+its task line over the CLAUDE.md rule (field lesson: with "Close:
+`/cost`" in every block, seven sessions of eight held their context
+13–29 min for the owner's paste, ≈ 2 h 20 min in all, despite the
+rule); the retro
 needs every row's cost measured or marked `not measured: <reason>`.
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
@@ -136,7 +142,15 @@ not a name), its commit and the install command.
    spaces, and `exámple.org` opened the session of `example.org` until
    the reviewer tried it).
 4. E2e scenarios for the slice's critical paths pass, derived from the
-   acceptance scenarios. Budget rate-limited external test resources
+   acceptance scenarios. A recovery rule (restart, orphan, expiry) is
+   proven from the entry point the user has AFTER the failure — the
+   same start call, a reloaded page — over a seeded orphan, not only
+   through a path that holds the lost id; two scenarios each green
+   alone ("interrupted", "a second one is refused") get a test of
+   their intersection (field lesson: an interrupted job held its
+   meeting's slot forever — recovery ran only on a read by an id that
+   lived in the lost tab; only the reviewer found it, at the cost of a
+   delta pass). Budget rate-limited external test resources
    (OTP quotas, test accounts, sandbox credits) for retries and
    per-platform runs, not for one ideal pass — and keep a spare.
 5. Launch-and-look check: run the app, walk the slice's happy path

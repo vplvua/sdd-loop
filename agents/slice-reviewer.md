@@ -49,6 +49,16 @@ never commit, never run mutating commands.
 3. Hunt in this priority order:
    - **Correctness**: logic errors, unhandled edge cases, race
      conditions, broken invariants documented in the PRD or ADRs.
+     A recovery rule (after a restart, a crash, an expiry — "a
+     restart leaves no job running forever") is traced from the entry
+     point the user STILL HAS after the failure — a new start, a
+     reloaded page — not from a path that holds an id the failure
+     lost (a tab, client memory). Ask what that call does over the
+     orphan: where "interrupted" and "a second one is refused" are
+     each tested alone, their intersection is the bug (field lesson:
+     recovery ran only on reading the job by an id that lived in the
+     lost tab; every new start answered `409 already_running`
+     forever — both scenarios green, staging too small to show it).
    - **Security**: the project's documented security boundaries (access
      isolation, authz on every new endpoint and file access), secrets or
      PII in logs, limits enforced server-side rather than client-side.
