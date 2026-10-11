@@ -52,7 +52,9 @@ Skip this section when the retro runs inside the slice session.
     the verify command, and the failing check — git cannot show them;
   - model switches: `/model` commands and changes of `message.model`
     (a proposal on one model and an apply on another is a cost and a
-    maker ≠ checker fact);
+    maker ≠ checker fact); the reviewer's model is `message.model` of
+    the subagent's transcript, never the agent definition's pin or
+    the author's assumption — correct the record if they differ;
   - pasted `/cost` / `/usage` (a user turn starting `Session\n\nTotal
     cost:`): the measured figure and the share past 150k;
   - idle gaps: > 30 min between the agent's turn and the next user

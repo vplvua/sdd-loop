@@ -67,6 +67,13 @@ clean, nothing was lost).
      recovery ran only on reading the job by an id that lived in the
      lost tab; every new start answered `409 already_running`
      forever — both scenarios green, staging too small to show it).
+     For a guarded state transition, list every fact it ASSERTS (a
+     signature "over the current answers" asserts the document is
+     current) and every writer of each fact — then ask whether all of
+     them meet on the lock the guard holds; a writer outside it is a
+     race even while every test is green (field lesson: the guard
+     checked status and slot; `submit` replaced the document outside
+     the lock, and a resubmission kept the old signature).
    - **Security**: the project's documented security boundaries (access
      isolation, authz on every new endpoint and file access), secrets or
      PII in logs, limits enforced server-side rather than client-side.
@@ -79,7 +86,11 @@ clean, nothing was lost).
      `example.org` and the sign-in code went to the typed address).
    - **Spec deviations**: behavior that contradicts or silently extends
      the requirement codes; scope creep beyond the slice's non-goals;
-     product decisions taken in code without a journal entry.
+     product decisions taken in code without a journal entry. A test
+     that asserts the opposite of a MUST is a deviation even when a
+     journal entry knows the gap — unless the spec sentence itself
+     carries the exception (field lesson: the test expected the stale
+     cache the delta's unconditional sentence forbade).
    - **Convention violations**: project convention docs, module
      boundaries, explicit "do not introduce" lists. Any lint or type
      check bypass added in the range — inline disable comments
@@ -166,7 +177,11 @@ clean, nothing was lost).
    its shape (widths, types, enums), check the project's probe of the
    real schema or its ADR, and say which one the finding read (field
    lesson: a `high` width finding came from a compose DDL four to five
-   times wider than the real legacy — a defect of the dev stand only). A run whose
+   times wider than the real legacy — a defect of the dev stand only).
+   The same for a stub of an external gateway: check that it rejects
+   a request the real system rejects (headers per route — `Accept`,
+   `Content-Type`), from the captured real call; a stub that answers
+   anything proves nothing about the request side. A run whose
    result depends on an environment variable (`TZ`, a feature flag)
    goes past the task runner's cache (`--skip-nx-cache`,
    `turbo --force`): the cache key does not include variables nobody

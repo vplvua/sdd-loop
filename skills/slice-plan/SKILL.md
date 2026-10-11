@@ -70,7 +70,13 @@ filled by the owner's `claude --resume <id>` → `/cost` after the
 session closed — a finished session never stays open waiting for it;
 see the CLAUDE.md session-ledger rules). The close task in `tasks.md`
 SAYS so in its own words — "ledger cost cell left empty, session id
-in the handoff" — never "Close: `/cost`, tick …": a session executes
+in the handoff" — never "Close: `/cost`, tick …", and the handoff's
+`/cost` line is copy-ready and says WHERE the block goes: "`claude
+--resume <id>` → `/cost` → paste into the first message of the NEXT
+session, not here" — a line that stops at `/cost` is pasted into the
+resumed session (field lesson: two slices in one week each woke a
+closed session 5½ h later for one ledger cell; both handoffs named the
+command and not the destination): a session executes
 its task line over the CLAUDE.md rule (field lesson: with "Close:
 `/cost`" in every block, seven sessions of eight held their context
 13–29 min for the owner's paste, ≈ 2 h 20 min in all, despite the
@@ -103,7 +109,13 @@ not a name), its commit and the install command.
    (field lesson: a half interrupted at its first question was recorded
    as "proposed in both repos" and the claim lived for five sessions).
 1. Spec artifacts (proposal, design, tasks, spec deltas) filled and
-   validated; all task checkboxes `[x]`. A decision about user-visible
+   validated; all task checkboxes `[x]`. A test that asserts a KNOWN
+   GAP (an open В-NN) against a MUST of the spec lands in the same
+   commit as the exception in that spec sentence ("…except <gap>,
+   В-NN") — otherwise the spec and the test say opposite things and
+   only the reviewer notices (field lesson: "the expiry leaves it in
+   the cache" was the test's expectation and the delta's sentence
+   stayed unconditional; a medium finding and a delta pass). A decision about user-visible
    behavior (what a screen shows, when it refreshes, how a control
    looks) that no normative source states — PRD, design canvas,
    journal — is not taken by the proposal from parity with an existing
@@ -122,6 +134,13 @@ not a name), its commit and the install command.
    integrations, response fixtures are written from a CAPTURED REAL
    call, not from documentation — until the first real call succeeds,
    the integration counts as unverified regardless of test coverage.
+   The local stub of that gateway checks each route's REQUEST
+   (`Accept`, `Content-Type`, auth header) as the real one does, from
+   the captured call — not only its response shape: a stub that
+   answers whatever it is sent hides the `406`/`415` the real system
+   returns (field lesson: one shared `Accept: application/json` was
+   green on every stubbed route and `406` on the real file download;
+   staging found it, at the cost of a fix block and a second deploy).
    The same holds for the external system's SHAPE (column widths,
    types, enums, nullability) in an inventory, a test bound or a
    question to the owner: it is read from a probe of the real system
@@ -157,9 +176,21 @@ not a name), its commit and the install command.
    scenario that ends at "the screen opens" stops the proof one
    gesture short (field lesson: tests, the device run and the owner's
    look all stopped at "tap → detail"; the owner's next "back" found
-   the detail with nothing under it). Budget rate-limited external test resources
+   the detail with nothing under it). A guarded state transition
+   lists every fact it ASSERTS (not only the status it checks) and
+   every writer of each fact; all writers meet on one lock, and the
+   race barrier runs each pair of them (field lesson: "signed over the
+   current answers" checked status and slot; the current document was
+   replaced by another writer outside the lock, and a resubmission
+   kept the old signature). Budget rate-limited external test resources
    (OTP quotas, test accounts, sandbox credits) for retries and
-   per-platform runs, not for one ideal pass — and keep a spare.
+   per-platform runs, not for one ideal pass — and keep a spare: the
+   first unit goes to ONE cell on the riskiest configuration (the
+   largest font, the platform the flow is likeliest to break on), the
+   rest of the matrix after it — a defect of the flow itself then
+   costs one unit, not four (field lesson: a six-cell flow spent nine
+   of ten daily codes, three of them on the flow's own layout bugs,
+   and the remaining cells waited a day).
 5. Launch-and-look check: run the app, walk the slice's happy path
    against the real integrations, confirm it works; note the check in
    the current-state doc. An owner look that covers several checks
@@ -181,6 +212,12 @@ not a name), its commit and the install command.
 6. Adversarial review by the `sdd-loop:slice-reviewer` subagent: clean
    context, different model than the author session, one pass over the
    slice diff frozen as `<first slice commit>^..<explicit end SHA>`.
+   The record of the review (ledger, retro, handoff) names the
+   reviewer's model as the subagent transcript's `message.model` shows
+   it — never the pinned model of the agent definition or an
+   assumption: the pin can fall back, and maker ≠ checker is the fact
+   the record exists to prove (field lesson: a retro named "Opus 5.5";
+   the transcript said `claude-sonnet-5-5`).
    The start is the slice's FIRST commit — the first commit of the
    change's tasks (task 1.1), whatever its prefix: a `docs` PRD edit or
    a `test`/`chore` capture of real responses counts, the first `feat`

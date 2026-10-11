@@ -215,7 +215,13 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   itself says "cost cell left empty, id in the handoff", never
   "Close: `/cost`": a session follows its task line over this file
   (field lesson: with "Close: `/cost`" in every block, seven sessions
-  of eight waited 13–29 min each for the paste).
+  of eight waited 13–29 min each for the paste). The handoff's `/cost`
+  line is copy-ready and names the destination: "`claude --resume
+  <id>` → `/cost` → paste into the first message of the NEXT session,
+  not here" — a line that stops at `/cost` gets the block pasted into
+  the resumed session (field lesson: two closed sessions in one week
+  were woken 5½ h later for one cell; both handoffs named the command,
+  neither the destination).
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.
