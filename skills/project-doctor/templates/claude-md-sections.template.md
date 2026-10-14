@@ -239,8 +239,16 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   session that idled 59 min inside its context for commands ready in
   the previous handoff). The handoff and the current-state doc name
   an owner task by FILE and number (`<change>/tasks.md`, task 1.1),
-  never by number alone (field lesson: "where do I read these
-  steps?" was the first message of a session).
+  never by number alone, and say in the same line WHO executes it
+  ("owner task" / "agent task, device session") (field lesson: "where
+  do I read these steps?" was the first message of a session; an
+  agent's task named by number was read by the owner as theirs).
+- An owner task on a shared environment (staging) is planned after
+  READING that environment's data and names it: which record, which
+  account, which environment the owner's client reads. No data there →
+  the task gets a preparation step or is not planned (field lesson: a
+  task needed records staging did not have; the owner's app read a
+  different environment than the change lived on).
 - An owner task that needs something a session produces (a deploy
   that must be live, a command that session builds, a variable it
   introduces) is a session BOUNDARY: it sits after that session's

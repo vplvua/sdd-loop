@@ -73,9 +73,17 @@ clean, nothing was lost).
      them meet on the lock the guard holds; a writer outside it is a
      race even while every test is green (field lesson: the guard
      checked status and slot; `submit` replaced the document outside
-     the lock, and a resubmission kept the old signature).
+     the lock, and a resubmission kept the old signature). A fact the
+     guard reads from ANOTHER row (a parent record's field it compares
+     against) counts: is it read under a shared lock inside the
+     transaction, and does its writer take that row's lock? (field
+     lesson: a countersign compared against an authorized person's
+     name read before the lock, while an edit of that name ran on
+     no lock at all).
    - **Security**: the project's documented security boundaries (access
-     isolation, authz on every new endpoint and file access), secrets or
+     isolation, authz on every new endpoint and file access — and is
+     each new operation on the authz walk / presence list the project
+     keeps outside verify?), secrets or
      PII in logs, limits enforced server-side rather than client-side.
      A lookup that grants access by a client-typed identifier (email,
      phone, login): ask what the store's comparison treats as EQUAL
@@ -123,7 +131,10 @@ clean, nothing was lost).
      Entries are proven by their EXITS too. State that lives for a
      session (a remembered token, a "sent" flag, a device registry)
      is checked against every way the session ends — sign-out,
-     account deletion, expiry — one test row each; a screen reached
+     account deletion, expiry — one test row each, and for every COPY
+     of it: the stored key and what the start moved into memory (a
+     slot, a cover flag, a cache) — an erasure table that lists only
+     the key leaves the copy alive; a screen reached
      from outside its normal navigation (a push, a deep link, a saved
      target) is checked by leaving it — back, switching context —
      reading what lies under it (the tab's stack), not only that it

@@ -85,14 +85,25 @@ needs every row's cost measured or marked `not measured: <reason>`.
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
 line to paste; the handoff names such a task by file and number
-(`<change>/tasks.md`, task 1.1) and asks for it BEFORE the next
+(`<change>/tasks.md`, task 1.1) together with WHO executes it — "owner
+task" or "agent task, device session" in the same line as the number
+(field lesson: an agent's task named by number alone came back "explain
+what to do in 4.7") — and asks for it BEFORE the next
 session opens, so that session reads the answer instead of waiting
 (remote-shell reads into staging/production are owner tasks too —
 the classifier blocks them like writes); an owner task that needs a
 session's own product (a live deploy, a command it builds) sits at the
 boundary AFTER that session, never inside it, and the handoff sends the
 answer to the next session's first message, not to the closed one —
-a reply there re-reads its whole context; a device check names the build file by its ABSOLUTE
+a reply there re-reads its whole context; an owner task on a shared
+environment (staging) is planned AFTER reading that environment's data
+and names it — which record, which account, which environment the
+client the owner uses actually reads — and a task the environment has
+no data for gets a preparation step or is not planned (field lesson: a
+task needed two ballots awaiting a first signature and staging had
+none; "which ballot, of which building?" came back on another; the
+owner could not vote because the app read a different environment than
+the change lived on); a device check names the build file by its ABSOLUTE
 path pasted from `ls -la <file>` run after the build (proof it exists,
 not a name), its commit and the install command.
 
@@ -128,7 +139,15 @@ not a name), its commit and the install command.
    polling" from parity with the old app; the owner's first look
    reversed both after the device session, and the second loop — a new
    producer change and nine contexts — cost about 80% of the first).
-2. The project's `verify` script passes (blocking gate).
+2. The project's `verify` script passes (blocking gate). A check
+   OUTSIDE verify that enumerates the project's operations (an authz
+   walk over every endpoint, a presence list, a permissions matrix)
+   gets each operation the task adds in the SAME commit, and the task
+   runs it there — as with a regenerated snapshot, but no gate will
+   reject the lag (field lesson: five new operations updated the
+   OpenAPI snapshot task by task; the auth walk's list ended at the
+   previous slice and was found red only at the DoD sweep, seven
+   sessions later).
 3. Smoke test against a real backing store: create / update / delete
    the slice's data and check invariants. For external gateway
    integrations, response fixtures are written from a CAPTURED REAL
@@ -170,7 +189,11 @@ not a name), its commit and the install command.
    meeting's slot forever — recovery ran only on a read by an id that
    lived in the lost tab; only the reviewer found it, at the cost of a
    delta pass). The same for exits: session-lived state gets a row
-   for every way the session ends (sign-out, deletion, expiry), and a
+   for every way the session ends (sign-out, deletion, expiry) and for every COPY of it —
+   the stored key AND what the start moved into memory (a slot, a cover
+   flag, a query cache): a table that erases only the key leaves the copy
+   alive (field lesson: the reviewer found a kept slot and a cover that
+   outlived an expiry between the hold and the tabs), and a
    screen a deep link or a push opens is proven by leaving it too —
    back, a context switch — reading the stack under it; an acceptance
    scenario that ends at "the screen opens" stops the proof one
@@ -182,7 +205,14 @@ not a name), its commit and the install command.
    race barrier runs each pair of them (field lesson: "signed over the
    current answers" checked status and slot; the current document was
    replaced by another writer outside the lock, and a resubmission
-   kept the old signature). Budget rate-limited external test resources
+   kept the old signature). A fact read from ANOTHER row counts too (a
+   field of the parent record the check compares against): its writer
+   takes that row's lock, the guard reads it under a shared lock (`FOR
+   SHARE`) inside the transaction — never a value read before it — and
+   the barrier runs that pair (field lesson: the next slice listed every
+   writer on the ballot row and missed the authorized person's name on
+   the meeting row; the countersign compared against a name read before
+   the lock — the slice's medium finding). Budget rate-limited external test resources
    (OTP quotas, test accounts, sandbox credits) for retries and
    per-platform runs, not for one ideal pass — and keep a spare: the
    first unit goes to ONE cell on the riskiest configuration (the
@@ -193,7 +223,17 @@ not a name), its commit and the install command.
    and the remaining cells waited a day).
 5. Launch-and-look check: run the app, walk the slice's happy path
    against the real integrations, confirm it works; note the check in
-   the current-state doc. An owner look that covers several checks
+   the current-state doc. A flow that hands the user to another app
+   (a system browser tab, a signing or payment app) is also walked
+   with the app's PROCESS killed under it (`adb shell am kill <pkg>`
+   while the other app is open) — an emulator with spare memory never
+   kills it, an owner's phone does. A property over time ("no frame of
+   the tabs before the check") is read from a screen RECORDING of the
+   whole interval, frame by frame, in the first probe — a screenshot
+   at the end misses 2–3 frames (field lesson: the owner's phone lost
+   the screens after the signing tab, which no device session had
+   produced; then two flashes of ~45 ms each cost their own code →
+   device iteration, 4 contexts of 9). An owner look that covers several checks
    gets a report line with one slot PER check (`icon: <PASS | remark>`,
    `toggles: …`), never one bare `<PASS | remark>` — a single slot
    comes back "PASS" about what the owner happened to look at (field
