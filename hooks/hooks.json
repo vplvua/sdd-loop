@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-edit-format.sh",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/post-edit-format.sh\"",
             "timeout": 120,
             "statusMessage": "sdd-loop: prettier + eslint on edited file"
           }
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-commit-verify.sh",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/pre-commit-verify.sh\"",
             "timeout": 900,
             "statusMessage": "sdd-loop: verify gate (runs on git commit)"
           }
