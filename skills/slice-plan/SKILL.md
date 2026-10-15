@@ -139,6 +139,14 @@ not a name), its commit and the install command.
    polling" from parity with the old app; the owner's first look
    reversed both after the device session, and the second loop — a new
    producer change and nine contexts — cost about 80% of the first).
+   A design's claim about how ANOTHER system behaves (the producer,
+   staging, a gateway) cites that system's spec or a captured answer
+   when the proposal is written; without one it is marked a
+   HYPOTHESIS for the device session to measure, never stated as fact
+   — in the design or in a journal entry (field lesson: a design and
+   its journal entry said "account deletion resets the consent"; the
+   platform's spec never listed it, the device session measured the
+   opposite, and it took a review finding to correct the journal).
 2. The project's `verify` script passes (blocking gate). A check
    OUTSIDE verify that enumerates the project's operations (an authz
    walk over every endpoint, a presence list, a permissions matrix)
@@ -233,7 +241,15 @@ not a name), its commit and the install command.
    at the end misses 2–3 frames (field lesson: the owner's phone lost
    the screens after the signing tab, which no device session had
    produced; then two flashes of ~45 ms each cost their own code →
-   device iteration, 4 contexts of 9). An owner look that covers several checks
+   device iteration, 4 contexts of 9). A command that does not exit
+   when its work is done (`expo run:ios`/`run:android` install the
+   build and then stream logs; a dev server) is never waited on by the
+   background task's exit notice — it never comes: wait with `Monitor`
+   until the success line appears in its log (or the installed
+   bundle's mtime changes), then stop the command; a turn never ends
+   on "waiting for the build" (field lesson: the build was installed at
+   10:47 and the context stood idle until the owner asked "still
+   running?" at 11:20). An owner look that covers several checks
    gets a report line with one slot PER check (`icon: <PASS | remark>`,
    `toggles: …`), never one bare `<PASS | remark>` — a single slot
    comes back "PASS" about what the owner happened to look at (field

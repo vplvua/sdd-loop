@@ -88,7 +88,10 @@ More generally, a proof counts only if it could have been red:
   counts 1 on a planted control line fed through the same command
   (field case: `grep -P` does not exist on macOS, and every filter
   printed 0 — including those that had something to find; use
-  `perl -ne` or `grep -E`).
+  `perl -ne` or `grep -E`). A `perl` filter with a non-ASCII pattern
+  (Cyrillic and the like) runs as `perl -CSD -Mutf8`: without
+  `-Mutf8` the pattern is bytes against decoded input and prints
+  nothing on any file — only the control shows it.
 - **Not from the cache.** A run whose result depends on something the
   task runner does not hash — an environment variable (`TZ`, a feature
   flag) — goes past its cache (`--skip-nx-cache`, `turbo --force`),
@@ -136,7 +139,11 @@ journal entries. In a multi-repo slice the list is asked in the
 slice's FIRST proposal, before the producer's contract is fixed (field
 lesson: "day, not time" and "no polling" came from parity with the old
 app; the owner's first look reversed both after the device session,
-and the second loop cost about 80% of the first).
+and the second loop cost about 80% of the first). A design's claim
+about how another system behaves (the producer, staging, a gateway)
+cites that system's spec or a captured answer; without one it is
+marked a hypothesis for the device session to measure, never stated
+as fact.
 
 Session hygiene: run one session per task group, not per slice, and
 start a FRESH session at a boundary instead of compacting a long one —

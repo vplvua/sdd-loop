@@ -166,7 +166,9 @@ clean, nothing was lost).
    wrap across lines is searched with `grep -z` and a POSIX class
    (`'A[[:space:]]*B'`) or with Python, over `git ls-files -z`
    (field lesson: `grep -rnzP … 2>/dev/null` reported "zero matches
-   in the whole tree" for a phrase that survived in two files).
+   in the whole tree" for a phrase that survived in two files). A
+   `perl` filter with a non-ASCII pattern runs as `perl -CSD -Mutf8`
+   — without `-Mutf8` it matches nothing on any input.
 5. On a follow-up pass over fix commits, treat each fix as a claim:
    does its red-before evidence target the line the finding named (the
    same file and field, not a line the check already caught), and did
