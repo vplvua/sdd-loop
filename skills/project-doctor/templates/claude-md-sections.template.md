@@ -121,7 +121,9 @@ docs-only and lands after the end SHA, outside the range; no code
 commits until the verdict lands; after a BLOCK the fix commits get their own
 follow-up pass from the previous end SHA, chained until PASS; a fix
 is proven red-before on the exact line the finding named and sized
-from the inventory the finding is one item of, not from its words —
+from the inventory the finding is one item of, not from its words (a
+fix that changes which rows a count sees takes in every condition
+counting them by another path — a publish gate, a blocker counter) —
 each pass that finds a flaw in the previous fix is paid twice;
 critical/high findings block until fixed; a reviewer's suggested fix is
 a hypothesis — validate it with the slice's tests before adopting),
@@ -135,7 +137,10 @@ states — PRD, design canvas, journal — is not taken from parity with
 an existing product or from an assumption. Ask the owner in the
 proposal session, before the design is written: one short list, each
 item with ready options and a recommendation; the answers become
-journal entries. In a multi-repo slice the list is asked in the
+journal entries. The list is the proposal session's FIRST message and
+the session closes with it; the answers go into the next session's
+first message, which writes the design (field lesson: a proposal held
+its context 2 h 23 min over the owner's answers). In a multi-repo slice the list is asked in the
 slice's FIRST proposal, before the producer's contract is fixed (field
 lesson: "day, not time" and "no polling" came from parity with the old
 app; the owner's first look reversed both after the device session,
@@ -229,6 +234,11 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   the resumed session (field lesson: two closed sessions in one week
   were woken 5½ h later for one cell; both handoffs named the command,
   neither the destination).
+- The handoff's "Next" names the COMMAND that opens the next session
+  (`/opsx:apply <change>`, `/opsx:propose`, a trunk session with its
+  sync script), not only the task group; a task whose record says
+  "Done" is ticked in the same commit (field lesson: "is the next
+  session propose or apply?" was the owner's first line).
 - An action only the owner can perform (a check on their own account,
   a real-credential capture) is its own task, never an item inside an
   agent's task: the agent cannot tick it, and archive does not wait.

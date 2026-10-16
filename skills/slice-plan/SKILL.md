@@ -82,6 +82,13 @@ its task line over the CLAUDE.md rule (field lesson: with "Close:
 13–29 min for the owner's paste, ≈ 2 h 20 min in all, despite the
 rule); the retro
 needs every row's cost measured or marked `not measured: <reason>`.
+The handoff's "Next" names the COMMAND the owner opens the next
+session with (`/opsx:apply <change>`, `/opsx:propose`, a trunk session
+with its sync script) — not only the task group — and a task whose
+record says "Done" is ticked in the same commit as that record (field
+lesson: "is the next session propose or apply?" was the owner's first
+line after a handoff that named only the group; a task recorded Done
+stayed unticked until the session after).
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
 line to paste; the handoff names such a task by file and number
@@ -133,7 +140,12 @@ not a name), its commit and the install command.
    product or from an assumption: it is ASKED to the owner in the
    proposal session, before the design is written — one short list,
    each item with ready options and the proposal's recommendation; the
-   answers become journal entries. In a multi-repo slice the list is
+   answers become journal entries. The list is the proposal session's
+   FIRST message and the session closes with it: the answers go into
+   the first message of the NEXT session, which writes the design — a
+   proposal never holds its context open over the owner's answers
+   (field lesson: a proposal waited 2 h 23 min of its 5 h 19 min wall
+   on the answers — $8.81 for 19 min of API time). In a multi-repo slice the list is
    asked in the slice's FIRST proposal, before the producer's contract
    is fixed (field lesson: a chat slice took "day, not time" and "no
    polling" from parity with the old app; the owner's first look
@@ -299,7 +311,14 @@ not a name), its commit and the install command.
    before state on the EXACT line the finding named (same file, same
    field — not an invented line the check already caught), and its
    scope is drawn from the inventory the finding is one item of (every
-   money field of the contract, every transition of the state table),
+   money field of the contract, every transition of the state table;
+   a fix that changes WHICH rows a count sees takes in every reader of
+   those rows AND every condition that counts them by another path — a
+   publish gate, a blocker counter — with a test row where that
+   condition and the shown count diverge (field lesson: a fix
+   inventoried every reader of the ballot table and missed the publish
+   condition counting the same ballots another way; only the delta
+   pass found it, as a medium)),
    collected in one command and closed in one commit — not from the
    finding's words, one word per pass. A fix to a test is checked
    against two mutants: the one the finding described and one that
