@@ -110,7 +110,18 @@ no data for gets a preparation step or is not planned (field lesson: a
 task needed two ballots awaiting a first signature and staging had
 none; "which ballot, of which building?" came back on another; the
 owner could not vote because the app read a different environment than
-the change lived on); a device check names the build file by its ABSOLUTE
+the change lived on). A preparation step that WRITES to the shared
+environment is itself an owner permission — auto mode refuses the
+write (`curl -X PATCH` included) as a shared-resource change — so the
+handoff asks for "writes to <env> allowed" or makes the preparation an
+owner task before the reality session, and the launch-and-look task
+names the records it will read (which meeting, which ballots, what
+state the data gives them — `not_delivered`, not the status the task
+assumed) as read from the environment, not from the task's expectation
+(field lesson: a session stood 85 min on the permission for one
+`PATCH` the plan called "prepare one if none"; its expectation
+"every push `not_in_app`" was written without reading staging, whose
+data gave `not_delivered`); a device check names the build file by its ABSOLUTE
 path pasted from `ls -la <file>` run after the build (proof it exists,
 not a name), its commit and the install command.
 
@@ -208,7 +219,15 @@ not a name), its commit and the install command.
    their intersection (field lesson: an interrupted job held its
    meeting's slot forever — recovery ran only on a read by an id that
    lived in the lost tab; only the reviewer found it, at the cost of a
-   delta pass). The same for exits: session-lived state gets a row
+   delta pass). A bulk action whose request FILTERS the selection
+   ("remind" sends only the rows with a ballot, "retry" only the
+   failed ones) gets a row for the selection the filter leaves EMPTY,
+   on every path to the request — the button, the sheet, the retry —
+   and the spec enables the action by the filtered set, not by "at
+   least one row selected" (field lesson: the spec said "one row
+   selected", the request sent `ballotIds: []` and got a `400` with a
+   generic error; the delta pass found the same class on the retry
+   path). The same for exits: session-lived state gets a row
    for every way the session ends (sign-out, deletion, expiry) and for every COPY of it —
    the stored key AND what the start moved into memory (a slot, a cover
    flag, a query cache): a table that erases only the key leaves the copy
@@ -261,7 +280,12 @@ not a name), its commit and the install command.
    bundle's mtime changes), then stop the command; a turn never ends
    on "waiting for the build" (field lesson: the build was installed at
    10:47 and the context stood idle until the owner asked "still
-   running?" at 11:20). An owner look that covers several checks
+   running?" at 11:20), and never BETWEEN the tasks of a group it was
+   asked to run: a turn ends on a question the owner must answer, on
+   a gate (verify, review, archive) or on the group's last task — a
+   stop after task N with "next is N+1" is a stall (field lesson:
+   "continue" three times in one apply session, each after a finished
+   task and no question). An owner look that covers several checks
    gets a report line with one slot PER check (`icon: <PASS | remark>`,
    `toggles: …`), never one bare `<PASS | remark>` — a single slot
    comes back "PASS" about what the owner happened to look at (field
