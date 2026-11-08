@@ -76,7 +76,11 @@ in the handoff" — never "Close: `/cost`, tick …", and the handoff's
 session, not here" — a line that stops at `/cost` is pasted into the
 resumed session (field lesson: two slices in one week each woke a
 closed session 5½ h later for one ledger cell; both handoffs named the
-command and not the destination): a session executes
+command and not the destination), and the ready first line of the next
+session ends with the slot `; /cost <id>: <paste the block>` — the
+cost then arrives with its id and the report, not as a separate
+reminder (field lesson: three retros in two repos left cells empty or
+got a block without its id): a session executes
 its task line over the CLAUDE.md rule (field lesson: with "Close:
 `/cost`" in every block, seven sessions of eight held their context
 13–29 min for the owner's paste, ≈ 2 h 20 min in all, despite the
@@ -102,7 +106,30 @@ the classifier blocks them like writes); an owner task that needs a
 session's own product (a live deploy, a command it builds) sits at the
 boundary AFTER that session, never inside it, and the handoff sends the
 answer to the next session's first message, not to the closed one —
-a reply there re-reads its whole context; an owner task on a shared
+a reply there re-reads its whole context. The ready line has a slot for
+each way the owner comes back — the answer, an OBSTACLE ("cannot
+finish: <what the system said>") and a QUESTION ("question — <what is
+unclear>") — each answer slot maps to a numbered step and asks for the
+fact the agent decides by ("delivered on N | no device"), never for a
+command's output; the first fill of a third-party form the agent has
+never seen (a store listing, a privacy questionnaire, a console's
+setup) is a COMPANION session: the handoff gives a ready line that
+opens a new session when the owner sits down at it ("starting 3.4"),
+and the owner asks there (field lesson: five retros running — a
+refusal mid-task, "what does slot 6 mean?", eighteen console
+screenshots, four form questions after 6 h idle — went into closed
+sessions). A step on a third-party console (Play, App Store Connect,
+Sentry, EAS) names the menu path and the fields from that vendor's
+CURRENT documentation, cited in the task, with the questions the form
+is known to ask on the way; a CLI command in it is the one the agent
+itself ran on this machine, verbatim (`npx eas-cli`, not `eas`); a
+command that keeps streaming after its work is done (`eas submit`)
+says Ctrl+C is safe; a task on the OWNER's device is written from
+what is known of that device (OS version, install path) and says on
+which OS version a step that depends on the OS holds (field lesson: a
+token scope the console no longer had, a deprecated `eas env:create`,
+screenshot ratios from memory; a permission pre-prompt planned for an
+Android 12 phone that grants it at install); an owner task on a shared
 environment (staging) is planned AFTER reading that environment's data
 and names it — which record, which account, which environment the
 client the owner uses actually reads — and a task the environment has
@@ -121,7 +148,18 @@ assumed) as read from the environment, not from the task's expectation
 (field lesson: a session stood 85 min on the permission for one
 `PATCH` the plan called "prepare one if none"; its expectation
 "every push `not_in_app`" was written without reading staging, whose
-data gave `not_delivered`); a device check names the build file by its ABSOLUTE
+data gave `not_delivered`). Logging IN to the shared environment is
+the same permission as a write (field lesson: auto mode refused the
+agent's staging login; the owner's script then failed on a
+`<session 7 scratchpad>` placeholder left in the task's path). The id
+of a shared-environment record in an owner's command is read from the
+environment when the task is written — a device screen, the
+platform's CLI — never from a previous slice's record, and the command
+starts with a read-only step that prints that id for the owner to
+compare before anything writes (field lesson: an October flat id
+failed in November and the owner wrote into a closed session after
+2 h 17 min; the rule, applied the next day in the project, was broken
+again by a task copied from its own first draft); a device check names the build file by its ABSOLUTE
 path pasted from `ls -la <file>` run after the build (proof it exists,
 not a name), its commit and the install command.
 
@@ -170,6 +208,27 @@ not a name), its commit and the install command.
    its journal entry said "account deletion resets the consent"; the
    platform's spec never listed it, the device session measured the
    opposite, and it took a review finding to correct the journal).
+   The same holds for an OPTION in a question to the owner: an option
+   carrying such a claim is checked against its source before it is
+   offered — the owner picks it as a fact (field lesson: "as far as I
+   remember… not checked" came back chosen, became a decision and a
+   spec sentence; the vendor's docs said the opposite); and for code
+   that takes a value other than the design's — a hypothesis in the
+   task line, with the device frame that tells the two apart. The
+   proposal's OWN premises are read from their source, not estimated:
+   which states "have" a document or a fact — from the code that writes
+   it and from the later writers that change its premise; a layout
+   bound (a toolbar's height, a column's width) — measured on the worst
+   row of the local data; the owner's sample document is normative — a
+   departure from it (a field, an addressee, a copy) is a question in
+   the list, not an assumption (field lessons: a status list missed one
+   the submit code also wrote; a toolbar estimated at 220 px measured
+   289 and stopped a session; a departure from the sample was rejected
+   at the PDF look, two sessions later). A list item that spends the
+   owner's resource (a device, a paid code, a console hour) carries a
+   "don't do" option with its cost (field lesson: "why do we need this,
+   can we do without?" came back after 1 h 22 min; the answer was in
+   the matrix).
 2. The project's `verify` script passes (blocking gate). A check
    OUTSIDE verify that enumerates the project's operations (an authz
    walk over every endpoint, a presence list, a permissions matrix)
@@ -227,7 +286,16 @@ not a name), its commit and the install command.
    least one row selected" (field lesson: the spec said "one row
    selected", the request sent `ballotIds: []` and got a `400` with a
    generic error; the delta pass found the same class on the retry
-   path). The same for exits: session-lived state gets a row
+   path). A mode that DISABLES actions (read-only, a lock) is
+   enforced in the function that sends the request, not on the
+   controls, and its inventory lists every path to that call beyond
+   the button — a key shortcut, drag-and-drop, a form `submit` — a row
+   each; a guard that stands in for a condition elsewhere in the code
+   lists that condition's fields, not the spec's sentence (field
+   lesson: a read-only mode and its e2e walk counted buttons while
+   Ctrl+Enter, drag and `submit` reached the same API calls; another
+   guard followed the spec's wording and missed a field — both found
+   only by the reviewer). The same for exits: session-lived state gets a row
    for every way the session ends (sign-out, deletion, expiry) and for every COPY of it —
    the stored key AND what the start moved into memory (a slot, a cover
    flag, a query cache): a table that erases only the key leaves the copy
@@ -280,7 +348,14 @@ not a name), its commit and the install command.
    bundle's mtime changes), then stop the command; a turn never ends
    on "waiting for the build" (field lesson: the build was installed at
    10:47 and the context stood idle until the owner asked "still
-   running?" at 11:20), and never BETWEEN the tasks of a group it was
+   running?" at 11:20). A REMOTE build behind a queue (EAS: 20–40 min)
+   is a session boundary instead: the task starts it with `--no-wait`
+   and closes the session with the build id in the handoff; the next
+   session opens with the ready line `<id>: FINISHED | ERRORED` and
+   reads the log — a rebuild after a failure is a new session too
+   (field lesson: two cloud builds planned in one device session became
+   six, `Monitor` events fed the context through every queue, both
+   sessions compacted — $27.75). A turn never ends BETWEEN the tasks of a group it was
    asked to run: a turn ends on a question the owner must answer, on
    a gate (verify, review, archive) or on the group's last task — a
    stop after task N with "next is N+1" is a stall (field lesson:
@@ -365,13 +440,21 @@ not a name), its commit and the install command.
    requirement — every scenario of the main spec either kept or
    dropped on purpose; the tool itself already fails loudly on an
    unmatched header, so no post-archive text comparison is needed.
-   Format the rewritten main specs before committing the archive.
+   Format the rewritten main specs before committing the archive. A
+   NEW capability's main spec comes out of `openspec archive` with
+   `Purpose: TBD`, which `validate --strict` rejects — write its
+   Purpose in the archive commit.
    After archive the tooling no longer knows the change (`status` →
    not found, `list` → empty, apply cannot drive it), so steps 8–10
    are tracked ONLY by the current-state doc: name them explicitly
    under "Next" before the archiving session ends, or they get lost
    (field lesson: a closing task survived only a handwritten handoff).
 8. Current-state doc updated: phase, done, next 1–2 tasks, blockers.
+   A multi-line edit of a doc goes through Edit or a script that
+   asserts its match and the result — never an unchecked `perl -i`
+   (field lesson: `perl -i -e '…'` without `print` emptied the
+   current-state doc, 375 → 0 lines; earlier in the same session a
+   `perl -i` with `local $/` silently replaced nothing).
 9. Traceability matrix updated: FR → slice → spec → test → demo check.
 10. Session retrospective via `/sdd-loop:slice-retro`: metrics and
     friction → cycles doc (session list and cost from the ledger);

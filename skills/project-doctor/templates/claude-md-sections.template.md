@@ -265,7 +265,27 @@ Task list hygiene (the change's `tasks.md` or equivalent):
   account, which environment the owner's client reads. No data there →
   the task gets a preparation step or is not planned (field lesson: a
   task needed records staging did not have; the owner's app read a
-  different environment than the change lived on).
+  different environment than the change lived on). Logging in to it
+  is a permission like a write. A record id in the owner's command is
+  read from the environment when the task is written, never from a
+  previous slice's record, and the command starts with a read-only
+  step printing that id for the owner to compare (field lesson: an
+  id from the month before failed, and the owner wrote into a closed
+  session).
+- The handoff's ready first line for the next session has a slot for
+  every way the owner comes back — the answer, an obstacle ("cannot
+  finish: <what the system said>"), a question ("question — <what is
+  unclear>"), and `; /cost <id>: <paste the block>` — each answer slot
+  maps to a numbered step and asks for the fact the agent decides by,
+  never a command's output. The first fill of a third-party form the
+  agent has never seen (a store listing, a privacy questionnaire) is a
+  companion session the owner opens with a ready line when they sit
+  down at it. A step on a third-party console names the menu path and
+  fields from the vendor's CURRENT documentation, cited; a CLI command
+  is the one the agent itself ran here, verbatim (field lesson: five
+  retros running, owners' refusals, questions and form doubts went into
+  closed sessions; a deprecated CLI command and console scopes from
+  memory cost two commits and the owner's 20 min).
 - An owner task that needs something a session produces (a deploy
   that must be live, a command that session builds, a variable it
   introduces) is a session BOUNDARY: it sits after that session's
