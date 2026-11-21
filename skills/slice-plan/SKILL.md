@@ -92,7 +92,20 @@ with its sync script) — not only the task group — and a task whose
 record says "Done" is ticked in the same commit as that record (field
 lesson: "is the next session propose or apply?" was the owner's first
 line after a handoff that named only the group; a task recorded Done
-stayed unticked until the session after).
+stayed unticked until the session after). A "Next" that happens in
+ANOTHER repository names that repository's absolute path and the
+command that opens the session there (field lesson: "what does it mean
+to open the proposal in the platform repository?" woke a closed
+session the next morning).
+The task list sizes its session groups when it is written: a group
+carrying a migration, an ADR and more than ~6 code tasks, or e2e
+geometry over several widths, is two sessions from the start, and a
+proposal opens in its own fresh session — never inside one that began
+as a question or is closing another change (field lesson: across
+three changes seven contexts compacted, each a session holding code
+and docs together — two of them 52% of their change's cost; a
+proposal begun as a backlog question idled 37 min inside its context,
+another 56 min until it compacted).
 Owner tasks in the change's task list are written in the owner's
 language and are self-sufficient — where, what to click, the exact
 line to paste; the handoff names such a task by file and number
@@ -124,7 +137,14 @@ CURRENT documentation, cited in the task, with the questions the form
 is known to ask on the way; a CLI command in it is the one the agent
 itself ran on this machine, verbatim (`npx eas-cli`, not `eas`); a
 command that keeps streaming after its work is done (`eas submit`)
-says Ctrl+C is safe; a task on the OWNER's device is written from
+says Ctrl+C is safe; a command the third party itself can refuse (a
+store submission, a deploy) carries its FAILURE branch in the same
+task — what to check, whether to run it once more, the manual path —
+so the refusal is finished in the owner's window (field lesson: a
+submission that failed at the store's edit commit cost a session to
+record it and a new owner task, and the same command passed on the
+second run; on the next release the planned manual upload took the
+refusal without a question); a task on the OWNER's device is written from
 what is known of that device (OS version, install path) and says on
 which OS version a step that depends on the OS holds (field lesson: a
 token scope the console no longer had, a deprecated `eas env:create`,
@@ -224,7 +244,27 @@ not a name), its commit and the install command.
    the list, not an assumption (field lessons: a status list missed one
    the submit code also wrote; a toolbar estimated at 220 px measured
    289 and stopped a session; a departure from the sample was rejected
-   at the PDF look, two sessions later). A list item that spends the
+   at the PDF look, two sessions later). A text that grows is measured
+   in EVERY column and card that prints it (grep the template and the
+   helper), with its state marks and at the narrowest width the layout
+   serves — each bound that does not hold is an item of the first list
+   (field lesson: a longer label was measured on one screen; two more
+   columns surfaced in later sessions, two extra rounds of questions).
+   A fact about a THIRD PARTY that an owner task stands on — the
+   client's legal form, whose name an account is in, what the owner
+   can do in the client's system directly (database console, admin
+   panel, files) — is an item of the list, never an assumption, and an
+   owner task does not send the owner to a third person without the
+   branch "if you have that access yourself" (field lesson: store
+   account instructions were written for a company and the client was
+   a private person; a proposal recorded "the owner has no access to
+   the client's legacy" and built a request for other hands on it —
+   the owner had it; both came back into closed sessions hours later). Test
+   data an instruction asks someone to create is enumerated from the
+   plan's checks, one line per check that reads it (field lesson: "a
+   test organization with two flats" came without the meter, the
+   attachment and the payee three checks stood on — three "not proven"
+   and two rewritten tasks). A list item that spends the
    owner's resource (a device, a paid code, a console hour) carries a
    "don't do" option with its cost (field lesson: "why do we need this,
    can we do without?" came back after 1 h 22 min; the answer was in
@@ -360,7 +400,12 @@ not a name), its commit and the install command.
    a gate (verify, review, archive) or on the group's last task — a
    stop after task N with "next is N+1" is a stall (field lesson:
    "continue" three times in one apply session, each after a finished
-   task and no question). An owner look that covers several checks
+   task and no question). Each finished task is COMMITTED before the
+   next one starts (a pair that does not compile apart — together):
+   a context that dies on a usage limit, a crash or a compaction keeps
+   only what is in history (field lesson: a session hit the usage
+   limit with three tasks' code uncommitted — $12.58 into a tree the
+   next context re-read for $14.91). An owner look that covers several checks
    gets a report line with one slot PER check (`icon: <PASS | remark>`,
    `toggles: …`), never one bare `<PASS | remark>` — a single slot
    comes back "PASS" about what the owner happened to look at (field
@@ -385,6 +430,17 @@ not a name), its commit and the install command.
    assumption: the pin can fall back, and maker ≠ checker is the fact
    the record exists to prove (field lesson: a retro named "Opus 5.5";
    the transcript said `claude-sonnet-5-5`).
+   A doubt the implementing session SAW and left — a race window, "is
+   this trim a defect?" — is a task or a question to the owner before
+   the freeze, not a note for the reviewer to rediscover; a note that
+   is addressed to the review goes into the reviewer's prompt verbatim
+   (field lesson: a window session 1 had seen came back as a medium —
+   a fix session of $7.88 and a delta pass; another handoff's "check
+   in review" never reached the prompt). A range with both an API and
+   a panel, or past ~60 files, is reviewed in two passes, each with
+   its own list of files to read fully; the reviewer's COVERAGE block
+   (read fully / as diff / not opened, what it ran) goes into the
+   retro, and a file it did not open is not reviewed.
    The start is the slice's FIRST commit — the first commit of the
    change's tasks (task 1.1), whatever its prefix: a `docs` PRD edit or
    a `test`/`chore` capture of real responses counts, the first `feat`

@@ -39,6 +39,9 @@ clean, nothing was lost).
   and must be checked for leaked personal data.
   Ranges written from the first commit without `^`, or from the start
   of the last session, silently hid slice commits in the field.
+- Notes the author's sessions left FOR the review ("check in review
+  whether X is a defect") — each one is a candidate you examine and
+  answer by name in COVERAGE.
 
 ## Procedure
 
@@ -53,7 +56,24 @@ clean, nothing was lost).
    - the ADRs that touch the slice;
    - any project convention docs/skills relevant to the changed layers
      (check CLAUDE.md for pointers).
-2. `git diff <range>` and read every changed file fully (not just hunks).
+2. `git diff <range>` and read every changed file fully (not just hunks)
+   — test files included: a test read as a hunk hides the setup that
+   makes it tautological. Count the range first (`git diff --stat`):
+   when it is too large to read fully in one pass (roughly 60+ files,
+   or two applications — an API and a panel), say so BEFORE reviewing,
+   read fully the files the prompt lists and the logic they call, and
+   name the rest in COVERAGE — the author runs a second pass over it
+   (field lesson: in three retros the prompt asked "read fully" and
+   the test files were read as hunks; a 91-file range lost most of
+   its panel half; each showed only in the reviewer's own report).
+   Run the tests of the changed logic — the unit files the range
+   touches, e2e only when the prompt gives its command — and at least
+   one mutant on a line the diff CHANGED (the copy-aside procedure
+   above); quote each result line (`Tests: …`) in COVERAGE.
+   "You may run" in the prompt means run: a review that ran nothing
+   rests on the author's own red-before records and says so (field
+   lesson: a pass of 39 s and 8 tool calls returned PASS_WITH_NOTES
+   with no test and no mutant run).
 3. Hunt in this priority order:
    - **Correctness**: logic errors, unhandled edge cases, race
      conditions, broken invariants documented in the PRD or ADRs.
@@ -218,7 +238,19 @@ FINDINGS:
 
 REJECTED CANDIDATES (min 5 total examined):
 - <candidate> — rejected because <specific verified reason>
+
+COVERAGE:
+- Read fully: <files>
+- Read as diff only: <files, or "none">
+- Not opened: <files of the range, or "none">
+- Ran: <command — its result line, per test run and per mutant; or
+  "nothing: <reason>">
+- Author's notes for review: <each note from the prompt — checked how,
+  or "none given">
 ```
+
+COVERAGE is mandatory and states what happened, not what the prompt
+asked for: the author decides from it whether a second pass is owed.
 
 Verdict rules: any `critical` or `high` finding ⇒ `BLOCK` (the author
 must fix and re-run verify before archiving). Only medium/low ⇒

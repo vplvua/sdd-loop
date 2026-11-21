@@ -176,6 +176,16 @@ runs, owner, review, closing, all in one context); a 12 h session with
 - The reviewer is spawned from a context that did NOT develop the
   slice — a fresh closing session qualifies; don't open an extra
   context just to spawn it.
+- Each finished task is committed before the next one starts (a pair
+  that does not compile apart — together): a context that dies on a
+  usage limit or a compaction keeps only what is in history (field
+  lesson: three tasks' uncommitted code cost $12.58, and $14.91 more
+  to re-read the tree).
+- Size the groups in the task list: a group carrying a migration, an
+  ADR and more than ~6 code tasks, or e2e geometry over several
+  widths, is two sessions from the start; a proposal opens in its own
+  fresh session, never inside one that began as a question or is
+  closing another change.
 
 Session ledger — `{{CYCLES_DIR}}/S-NN.sessions.md`, one per slice (in
 the primary repo; satellites write through `primaryRoot`). It is the

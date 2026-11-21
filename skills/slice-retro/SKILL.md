@@ -68,7 +68,11 @@ Skip this section when the retro runs inside the slice session.
   row whose id came with it, never by order or by an ordinal ("the
   third session" — the ledger also counts proposal and owner-probe
   rows); two blocks or no id → ask. Check the block's model and wall
-  duration against the row before writing.
+  duration against the row before writing. A block from a resumed
+  session that reads `$0.0000` is not a measurement: the cell gets
+  `not measured: /cost after resume printed 0` and the transcript
+  floor, marked as an estimate (field lesson: two closed sessions in a
+  row answered zero after `claude --resume`).
 - **Privacy**: the retro artifact quotes owner turns sparingly (the
   words that carry the lesson) and never pastes raw transcript content.
 
@@ -90,7 +94,16 @@ Skip this section when the retro runs inside the slice session.
    for its own task, since a per-session "seen twice, fix it" rule
    never fires when every session sees it once (field lesson: one test
    stayed "recorded, not fixed" through four sessions and a proposal
-   commit, each seeing it for the first time).
+   commit, each seeing it for the first time). The count runs ACROSS
+   retros too: grep the cycles dir for the test's file name, and do the
+   same for a row the DoD runs report as "known red". One that an
+   earlier retro already named is not proposed a second time — it goes
+   into the current-state doc's "Next" as a queued task of its own, as
+   one of this retro's apply-now fixes (field lesson: a red row stood
+   "known" in the records of at least five contexts and a flaky
+   signature stub in five over two changes; retro after retro proposed
+   a task, each session paid reruns to prove "not this change", and
+   "1 failed — known" masks a new red in the same file).
 4. **Documentation and settings vs reality**: which statements in the
    PRD / capability plan / CLAUDE.md / skills / SDD rules turned out
    inaccurate, outdated, or missing; where the configured process
@@ -135,7 +148,15 @@ Split findings into two buckets:
 - **Apply now (max 3 per retro)** — small, reversible process fixes:
   skill wording, CLAUDE.md clarifications, hook tweaks, linter/SDD
   config rules. Apply, list them in the artifact, and commit with the
-  retro (`chore(S-NN): retro ...`).
+  retro (`chore(S-NN): retro ...`). Friction that broke a rule the
+  project ALREADY has is recorded as a violation, not written a second
+  time — CLAUDE.md is re-read on every request, and each added lesson
+  is paid by every later session (field lesson: an owner's `/usage`
+  showed CLAUDE.md at 15k tokens per request, about 30% of the day's
+  usage, and four retros applied nothing because of it).
+  When that size is itself the friction, propose moving lessons that
+  caught nothing in the last three slices out of CLAUDE.md — a
+  structural change, the owner's decision.
 - **Propose only** — anything normative or structural: PRD, ADRs,
   glossary, journal entries, DoD changes, new tools. NEVER edit these
   from the retro; record the proposal in the artifact and, where the
