@@ -12,7 +12,7 @@ PRD (coded requirements) → capability plan (vertical slices + DoD)
   → per slice: propose → implement (verify gate on every commit)
   → adversarial review (maker ≠ checker, clean context, different model)
   → archive specs → retro (metrics + ≤3 applied process fixes)
-  → fixes land in CLAUDE.md/skills → next slice is cheaper
+  → fixes land in the lessons file/CLAUDE.md/skills → next slice is cheaper
 ```
 
 Differentiator vs spec-kit/BMAD-style frameworks: the retro step is a
@@ -50,7 +50,8 @@ template + registry README, capability-plan skeleton (slice entry format
 - shared DoD), `current-state.md` (memory bank), traceability matrix,
   assumptions/open-questions journal (Р-/П-/В-), `docs/cycles/` retro
   template, CLAUDE.md section blocks (handoff protocol, quality gates,
-  slice workflow), `verify` script wiring for package.json.
+  slice workflow), the lessons file (rules read at one moment of a
+  slice), `verify` script wiring for package.json.
 
 ## /project-doctor
 
@@ -140,6 +141,42 @@ ADRs with `main`:
 Open: whether the doctor should scaffold this (attribute file, sync
 script, CLAUDE.md section) when a project declares a second SDD layer.
 
+### Where a lesson lives: CLAUDE.md vs the lessons file (v0.6.0)
+
+Until v0.6.0 every lesson — the plugin's template rules and each
+retro's "lessons kept" block — was merged into the project's CLAUDE.md.
+CLAUDE.md is part of every request, so the loop taxed itself: the
+admin project's CLAUDE.md grew to 15k tokens per request, about 30% of
+its owner's daily usage by `/usage`, and four retros applied no lesson
+to keep it from growing — the self-improvement step had stopped.
+
+Decision: a lesson has an address chosen by WHEN it acts.
+
+- **CLAUDE.md** — rules that act in every session: the read order,
+  writing code and tests, committing and the gates, session hygiene,
+  the ledger. Template: `claude-md-sections.template.md`.
+- **The lessons file** (`paths.lessons`, default
+  `<cyclesDir>/lessons.md`, always English) — rules that act at one
+  moment of a slice, in three sections: "Proposal and design", "Task
+  list and handoffs", "Review and closing". CLAUDE.md names the
+  moment each section is read at. Template: `lessons.template.md`.
+
+Why a file read at its moment is cheaper than the same text in
+CLAUDE.md: it enters the context once, late (a handoff is the last
+thing a session writes), and only in sessions that reach that moment.
+
+Rejected: dropping old lessons by age or by "caught nothing in the
+last three slices" (the SA-12 retro's proposal) — a rule that prevents
+a mistake leaves no catch to count; the moment criterion needs no
+history. Rejected: one section per retro — a session at the proposal
+would have to read every retro to find the proposal rules.
+
+Mechanics: `slice-retro` writes each apply-now lesson to its address;
+`project-doctor` scaffolds the file, measures CLAUDE.md, and for a
+project scaffolded earlier proposes a one-time SPLIT — a verbatim
+move the user accepts rule by rule, committed alone. Template drift
+counts a rule as present in whichever file it lives.
+
 ## Resolved questions
 
 - OQ-1 (plugin layout): confirmed from official docs — manifest in
@@ -152,9 +189,7 @@ script, CLAUDE.md section) when a project declares a second SDD layer.
   `/plugin marketplace add <owner>/sdd-loop` →
   `/plugin install sdd-loop@sdd-loop`.
 
-## Open questions
-
-- OQ-3: how much of the POC's CLAUDE.md "lessons" section becomes
-  template content vs stays project-specific (currently: generic rules —
-  freeze-range, no-chained-commit — are in the templates; tool-specific
-  lessons stay in the project).
+- OQ-3 (lessons: template vs project): generic rules are in the
+  templates, tool-specific lessons stay in the project; since v0.6.0
+  both kinds are split by moment between CLAUDE.md and the lessons
+  file (see "Where a lesson lives").

@@ -18,10 +18,15 @@ repo is both the plugin and its own marketplace
   Anything bigger: propose first, change after agreement.
 - Where a lesson lands decides who gets it: skills and the agent reach
   every installed project on the next session; the CLAUDE.md sections
-  template and the DoD copied into a project's plan reach it only when the doctor
-  reconciles template drift (`templatesVersion`). A lesson that must
-  act in live projects now goes into a skill/agent, not only the
-  template.
+  template, the lessons template and the DoD copied into a project's
+  plan reach it only when the doctor reconciles template drift
+  (`templatesVersion`). A lesson that must act in live projects now
+  goes into a skill/agent, not only the template.
+- A template lesson has an address by WHEN it acts: every session →
+  `claude-md-sections.template.md` (it is re-read on every request —
+  keep it small); one moment of a slice (proposal, task list, review)
+  → `lessons.template.md`. See `docs/DESIGN.md`, "Where a lesson
+  lives".
 - Every substantive change bumps `version` in
   `.claude-plugin/plugin.json` in the SAME commit — installed copies
   auto-update on session start, an unbumped change reaches nobody.

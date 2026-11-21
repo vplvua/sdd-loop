@@ -63,6 +63,14 @@ For each slice:
 
 ## Definition of Done (every slice)
 
+The DoD below is the plan's copy of the rules; the project's lessons
+file (`paths.lessons` in the config, default `<cyclesDir>/lessons.md`)
+carries the same moments with the project's own field cases. A session
+reads its section when the moment comes — "Proposal and design" before
+a proposal or a design, "Task list and handoffs" before a task list,
+an owner task or a handoff, "Review and closing" before the freeze —
+and CLAUDE.md keeps only what acts in every session.
+
 Throughout the slice: every session that works on it has a row in the
 session ledger `<cyclesDir>/S-NN.sessions.md` (created by the PROPOSAL
 session, which writes the first row; appended at session start; cost

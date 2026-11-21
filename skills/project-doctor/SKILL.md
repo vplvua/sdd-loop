@@ -50,7 +50,9 @@ Write the answers to `.sdd/config.json` from `templates/config.template.json`
 
 All other sdd-loop skills and the `slice-reviewer` agent read this file.
 Fields: `language` (BCP-47 code for docs), `docsDir`, `paths` (prd,
-plan, currentState, traceability, journal, glossary, adrDir, cyclesDir),
+plan, currentState, traceability, journal, glossary, adrDir, cyclesDir,
+lessons — the lessons file; absent in a config written before v0.6.0,
+then `<cyclesDir>/lessons.md`),
 `verifyCommand`, `openspec` (bool), `role` (`primary` | `satellite`,
 default primary), `primaryRoot` (satellite only: relative path to the
 primary repo checkout). Keep paths project-relative.
@@ -87,7 +89,10 @@ Satellite deltas to the checklist:
   registry under a repo-prefixed series (e.g. `ADR-P-NNNN`) so plain
   `ADR-NNNN` stays unambiguous across repos; product decisions and
   cross-repo engineering decisions always go to the primary. Record
-  the series choice itself as the satellite's first local ADR.
+  the series choice itself as the satellite's first local ADR. The
+  same for lessons: `paths.lessons` of a satellite MAY point to a
+  local file for the lessons of its own stack (its database, its
+  test runner), next to its local CLAUDE.md.
 - Local layers — scaffold as usual for THIS repo's stack: verify chain
   (5), hooks conflict check, OpenSpec working layer (8, per-repo
   specs), maker ≠ checker (6, plugin enabled at project scope here
@@ -153,16 +158,55 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
   specs → ADRs, plus the quality-gates and slice-workflow sections
   (`templates/claude-md-sections.template.md`). Merge into an existing
   CLAUDE.md — never clobber it.
+- The **lessons file** at `paths.lessons` (`templates/lessons.template.md`,
+  always English) holds the rules that act at one moment of a slice —
+  proposal and design, task list and handoffs, review and closing —
+  and CLAUDE.md's slice-workflow section points to it with the moment
+  each section is read at. CLAUDE.md is re-read on every request; the
+  lessons file is read once, at its moment.
+- **CLAUDE.md size.** Report `wc -c` of CLAUDE.md and the estimate
+  bytes ÷ 4 as tokens per request. Past ~24 KB (≈ 6k tokens) it is a
+  GAP whose fix is the SPLIT below — also the fix for a project
+  scaffolded before v0.6.0, whose CLAUDE.md still carries the moment
+  rules (field: a CLAUDE.md of 15k tokens per request was about 30%
+  of its owner's daily usage, and four retros applied no lesson
+  because of it).
+- **The split** (once per project, then kept by the retro):
+  1. Walk CLAUDE.md block by block — the plugin's sections and every
+     "lessons kept from the … retro" block — and give each rule a
+     destination by WHEN it acts. It stays if it acts in every
+     session: the read order, writing code and tests, committing and
+     the gates, opening or closing a session, the ledger. It moves if
+     it acts at one moment: writing a proposal, a design, a task list,
+     an owner task or a handoff; freezing a review range, fixing a
+     finding, archiving, the retro. A rule of one technology (a
+     database's locks, a build tool) acts when that code is written:
+     it stays, unless the project has a convention doc for that layer
+     that CLAUDE.md points to.
+  2. Show the table (rule in a few words → stays | section of the
+     lessons file) with the sizes before and after, and move only
+     what the user accepts.
+  3. Move VERBATIM — the project's wording and its field cases are not
+     rewritten, shortened or merged; a rule that appears twice is
+     reported, not deduplicated silently. In a satellite, or a project
+     on a branch-only layer, the lessons file is written where that
+     project's `paths.lessons` points.
+  4. Add the pointer paragraph of the slice-workflow section to
+     CLAUDE.md, add `paths.lessons` to the config, and commit the
+     split alone (`chore(sdd): split lessons out of CLAUDE.md`) —
+     the diff must read as a pure move.
 - **Template drift.** Plugin releases add rules to the CLAUDE.md
-  sections template and to the DoD in `sdd-loop:slice-plan`; an
-  already-scaffolded project never receives them on its own. Read the
-  plugin version from `../../.claude-plugin/plugin.json` (relative to
-  this skill) and compare with `templatesVersion` in the config. When
-  it is older or absent, reconcile RULE BY RULE, by meaning, not text:
-  a template rule present in CLAUDE.md (or the plan's DoD) in any
-  wording — including a stronger, project-specific one — is OK; an
-  absent rule is a GAP listed with the proposed text. Merge only what
-  the user accepts, never rewrite project wording, then set
+  sections template, the lessons template and the DoD in
+  `sdd-loop:slice-plan`; an already-scaffolded project never receives
+  them on its own. Read the plugin version from
+  `../../.claude-plugin/plugin.json` (relative to this skill) and
+  compare with `templatesVersion` in the config. When it is older or
+  absent, reconcile RULE BY RULE, by meaning, not text: a template
+  rule present in CLAUDE.md, the lessons file or the plan's DoD in any
+  wording — including a stronger, project-specific one — is OK, in
+  whichever of them it lives; an absent rule is a GAP listed with the
+  proposed text and the file the template keeps it in. Merge only
+  what the user accepts, never rewrite project wording, then set
   `templatesVersion` to the plugin version.
 
 ### 5. Verification layer
@@ -201,16 +245,17 @@ report: `OK` / `GAP (what's missing)` / `N/A (why)`.
 - The `sdd-loop:slice-reviewer` agent is available (comes with this
   plugin — verify the plugin is enabled at project scope so teammates
   get it too).
-- CLAUDE.md documents the review DoD step and the freeze-range rule
+- CLAUDE.md documents the review DoD step; the freeze-range rule
   (`<first slice commit>^..<explicit end SHA>`, no commits until the
-  verdict lands) — part of the
-  CLAUDE.md sections template.
+  verdict lands) is in the lessons file's "Review and closing"
+  section (or still in CLAUDE.md, before the split).
 
 ### 7. Improvement loop
 
 - `paths.cyclesDir` exists with a README carrying the retro and
   session-ledger templates (`templates/cycles-README.template.md`);
-  CLAUDE.md carries the session-ledger rules.
+  CLAUDE.md carries the session-ledger rules; the lessons file exists
+  for the retro to append to.
 - The retro (`/sdd-loop:slice-retro`) is wired as the final DoD step in
   the capability plan and CLAUDE.md.
 

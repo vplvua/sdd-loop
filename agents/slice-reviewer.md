@@ -55,7 +55,10 @@ clean, nothing was lost).
    - the referenced FR/NFR rows in the PRD (normative);
    - the ADRs that touch the slice;
    - any project convention docs/skills relevant to the changed layers
-     (check CLAUDE.md for pointers).
+     (check CLAUDE.md for pointers), and the "Review and closing"
+     section of the lessons file (`paths.lessons`, default
+     `<cyclesDir>/lessons.md`) when it exists — the project's own
+     record of what earlier reviews missed.
 2. `git diff <range>` and read every changed file fully (not just hunks)
    — test files included: a test read as a hunk hides the setup that
    makes it tautological. Count the range first (`git diff --stat`):

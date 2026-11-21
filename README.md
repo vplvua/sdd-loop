@@ -11,7 +11,7 @@ PRD (coded requirements) → capability plan (vertical slices + DoD)
   → per slice: propose → implement (verify gate on every commit)
   → adversarial review (maker ≠ checker, clean context, different model)
   → archive specs → retro (metrics + ≤3 applied process fixes)
-  → fixes land in CLAUDE.md/skills → next slice is cheaper
+  → fixes land in the lessons file/CLAUDE.md/skills → next slice is cheaper
 ```
 
 ## Contents

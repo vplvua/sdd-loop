@@ -11,7 +11,8 @@
     "journal": "docs/assumptions-open-questions.md",
     "glossary": "docs/glossary.md",
     "adrDir": "docs/adr",
-    "cyclesDir": "docs/cycles"
+    "cyclesDir": "docs/cycles",
+    "lessons": "docs/cycles/lessons.md"
   },
   "verifyCommand": "npm run verify",
   "openspec": true,

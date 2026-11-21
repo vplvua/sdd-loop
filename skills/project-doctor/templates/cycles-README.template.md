@@ -1,5 +1,9 @@
 # Slice retrospectives
 
+`lessons.md` — the lessons file: rules that act at one moment of a
+slice (proposal, task list, review), read at that moment; retros append
+to it. CLAUDE.md keeps only what acts in every session.
+
 Two files per slice:
 
 - `S-NN.sessions.md` — the session ledger: created by the slice's

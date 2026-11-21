@@ -19,7 +19,8 @@ user to grant access (`--add-dir` or
 `permissions.additionalDirectories`) first.
 
 This step is what makes the process self-improving: fixes applied here
-land in CLAUDE.md, skills, and configs — the next slice starts cheaper.
+land in the lessons file, CLAUDE.md, skills, and configs — the next
+slice starts cheaper.
 
 ## Dialogue from transcripts (only when it is not in context)
 
@@ -105,7 +106,8 @@ Skip this section when the retro runs inside the slice session.
    a task, each session paid reruns to prove "not this change", and
    "1 failed — known" masks a new red in the same file).
 4. **Documentation and settings vs reality**: which statements in the
-   PRD / capability plan / CLAUDE.md / skills / SDD rules turned out
+   PRD / capability plan / CLAUDE.md / lessons file / skills / SDD
+   rules turned out
    inaccurate, outdated, or missing; where the configured process
    diverged from what was actually practiced. If the installed plugin
    is newer than `templatesVersion` in the config, add "run
@@ -148,15 +150,21 @@ Split findings into two buckets:
 - **Apply now (max 3 per retro)** — small, reversible process fixes:
   skill wording, CLAUDE.md clarifications, hook tweaks, linter/SDD
   config rules. Apply, list them in the artifact, and commit with the
-  retro (`chore(S-NN): retro ...`). Friction that broke a rule the
-  project ALREADY has is recorded as a violation, not written a second
-  time — CLAUDE.md is re-read on every request, and each added lesson
-  is paid by every later session (field lesson: an owner's `/usage`
-  showed CLAUDE.md at 15k tokens per request, about 30% of the day's
-  usage, and four retros applied nothing because of it).
-  When that size is itself the friction, propose moving lessons that
-  caught nothing in the last three slices out of CLAUDE.md — a
-  structural change, the owner's decision.
+  retro (`chore(S-NN): retro ...`). A lesson has an ADDRESS, chosen
+  by when it acts. CLAUDE.md is re-read on every request, so it takes
+  only a lesson that must act in every session — writing code and
+  tests, committing, opening or closing a session. A lesson that acts
+  at one moment goes to the lessons file (`paths.lessons` in the
+  config, default `<cyclesDir>/lessons.md`), into the section of that
+  moment — "Proposal and design", "Task list and handoffs", "Review
+  and closing" — as one bullet: the rule, then the field case in a
+  clause. No lessons file yet → the lesson still goes to CLAUDE.md,
+  and "run `/sdd-loop:project-doctor` to split the lessons out of
+  CLAUDE.md" joins the proposals. Friction that broke a rule the
+  project ALREADY has (in either file) is recorded as a violation,
+  not written a second time (field lesson: an owner's `/usage` showed
+  CLAUDE.md at 15k tokens per request, about 30% of the day's usage,
+  and four retros applied nothing because of it).
 - **Propose only** — anything normative or structural: PRD, ADRs,
   glossary, journal entries, DoD changes, new tools. NEVER edit these
   from the retro; record the proposal in the artifact and, where the
@@ -172,8 +180,8 @@ Split findings into two buckets:
 3. Write `<cyclesDir>/S-NN.md` per the template in
    `<cyclesDir>/README.md`, in the documentation language from the
    config.
-4. Apply the "apply now" fixes (≤3), stage them together with the
-   artifact.
+4. Apply the "apply now" fixes (≤3), each at its address (see
+   "Improvements"), and stage them together with the artifact.
 5. Update the current-state doc if the retro changed next steps.
 6. Summarize to the user: metrics, top friction, what was changed, what
    awaits their decision.
